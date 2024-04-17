@@ -13,16 +13,20 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 //solo se debe considerar la llave primaria de la clase entonces por ese se coloca el onlyExpl,aca y en el Id
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+//@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Document("Clientes")
 @NoArgsConstructor
-public class Cliente extends Cuenta implements Serializable {
+public class Cliente implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
     private String codigo;
-
-    private String cedula, nombre, apellido, ciudad, fotoPerfil;
+    private String cedula;
+    private String nombre;
+    private String apellido;
+    private String ciudad;
+    private String fotoPerfil;
+    private Cuenta cuenta;
     private List<String> telefono;
 
     @Builder

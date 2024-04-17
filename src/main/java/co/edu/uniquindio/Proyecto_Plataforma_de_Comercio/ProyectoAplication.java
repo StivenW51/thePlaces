@@ -2,6 +2,8 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
 
 @SpringBootApplication
 public class ProyectoAplication {

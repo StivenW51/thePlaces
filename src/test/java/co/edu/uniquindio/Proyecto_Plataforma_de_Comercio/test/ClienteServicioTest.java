@@ -30,7 +30,7 @@ public class ClienteServicioTest {
         );
 
         //Se registra el cliente
-        String codigo = clienteServicio.registrarCliente(registroUsuarioDTO);
+        String codigo = clienteServicio.registroCliente(registroUsuarioDTO);
 
         //se verifica que el codigo no sea nulo, es decir, que se haya registrado correctamente el cliente
         Assertions.assertNotNull(codigo);

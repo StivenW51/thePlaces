@@ -25,11 +25,12 @@ public class ClienteServicioImpl implements ClienteServicio {
 
 
     private boolean existeEmail(String emain){
-        return clienteRepo.findByEmail(emain).isPresent();
+        return true;
+                //clienteRepo.findByEmail(emain).isPresent();
     }
 
     private boolean existeNickname(String nickname){
-        return clienteRepo.findByNickname(nickname).isPresent();
+        return true; //clienteRepo.findByNickname(nickname).isPresent();
     }
 
     private boolean existeCedula(String cedula){
@@ -47,7 +48,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public String registrarCliente(RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
+    public String registroCliente(RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
 
         //verificamos que el email sea único
         if(existeEmail(registroUsuarioDTO.email())){
@@ -66,17 +67,21 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         //creamos el objeto cliente
         Cliente cliente = new Cliente();
+        Cuenta cuenta = new Cuenta();
 
         //asignamos los campos de cada atributo
         cliente.setCedula(registroUsuarioDTO.cedula());
         cliente.setNombre(registroUsuarioDTO.nombre());
         cliente.setApellido(registroUsuarioDTO.apellido());
-        cliente.setNickname(registroUsuarioDTO.nickname());
-        cliente.setEmail(registroUsuarioDTO.email());
         cliente.setCiudad(registroUsuarioDTO.ciudadResidencia());
-        cliente.setPassword(registroUsuarioDTO.password());
-        cliente.setPassword(registroUsuarioDTO.repitaPassword());
-        cliente.setEstadoRegistro(EstadoRegistro.ACTIVO);
+
+        cuenta.setNickname(registroUsuarioDTO.nickname());
+        cuenta.setEmail(registroUsuarioDTO.email());
+        cuenta.setPassword(registroUsuarioDTO.password());
+        cuenta.setPassword(registroUsuarioDTO.repitaPassword());
+        cuenta.setEstadoRegistro(EstadoRegistro.ACTIVO);
+
+        cliente.setCuenta(cuenta);
 
         //Guardamos en la base de datos y obtenemos el objeto registrado
         Cliente clienteGuardado = clienteRepo.save(cliente);
@@ -105,7 +110,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         Cliente cliente = optionalCliente.get();
         cliente.setNombre(actualizacionUsuarioDTO.nombre());
         cliente.setApellido(actualizacionUsuarioDTO.apellido());
-        cliente.setEmail(actualizacionUsuarioDTO.email());
+        cliente.getCuenta().setEmail(actualizacionUsuarioDTO.email());
         cliente.setCiudad(actualizacionUsuarioDTO.ciudadResidencia());
         cliente.setFotoPerfil(actualizacionUsuarioDTO.fotoPerfil());
 
@@ -127,7 +132,7 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         //si encontramos el cliente entonces lo obtenemos y le cambiamos el estado a inactivo
         Cliente cliente = optionalCliente.get();
-        cliente.setEstadoRegistro(EstadoRegistro.INACTIVO);
+        cliente.getCuenta().setEstadoRegistro(EstadoRegistro.INACTIVO);
 
         //como el objeto cliente ya tiene un id, el save() no crea un nuevo registro sino que actualiza el que ya existe
         clienteRepo.save(cliente);
@@ -176,7 +181,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         Cliente cliente = optionalCliente.get();
 
         //Retornamos el cliente en formato DTO
-        return new DetalleClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getFotoPerfil(), cliente.getNickname(), cliente.getEmail(), cliente.getCiudad());
+        return new DetalleClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getFotoPerfil(), cliente.getCuenta().getNickname(), cliente.getCuenta().getEmail(), cliente.getCiudad());
     }
 
     @Override
@@ -190,7 +195,7 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         //recorremos la lista de clientes y por cada uno creamos un DTO y lo agregamos a la lista
         for (Cliente cliente : clientes){
-            items.add(new ItemClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getApellido(), cliente.getEmail(), cliente.getNickname(), cliente.getCiudad(), cliente.getFotoPerfil()));
+            items.add(new ItemClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getApellido(), cliente.getCuenta().getEmail(), cliente.getCuenta().getNickname(), cliente.getCiudad(), cliente.getFotoPerfil()));
         }
 
         return items;

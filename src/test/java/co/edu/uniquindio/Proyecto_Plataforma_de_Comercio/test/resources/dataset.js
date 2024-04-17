@@ -32,6 +32,28 @@ db.clientes.insertMany([
         nombre: 'Pedro',
         estado: 'ACTIVO',
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
+    },
+    {
+        codigo: 'Cliente4',
+        nickname: 'stivenw51',
+        ciudad: 'Armenia',
+        fotoPerfil: 'mi foto',
+        email: 'stivenavs@email.com',
+        password: 'jsr',
+        nombre: 'stiven restrepo',
+        estado: 'ACTIVO',
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
+    },
+    {
+        codigo: 'Cliente5',
+        nickname: 'ezequielito',
+        ciudad: 'Armenia',
+        fotoPerfil: 'mi foto',
+        email: 'ezequielito69@email.com',
+        password: 'jsr',
+        nombre: 'ezequiel loaiza',
+        estado: 'ACTIVO',
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
     }
 ]);
 db.negocios.insertMany([
@@ -51,6 +73,94 @@ db.negocios.insertMany([
                 dia: 'LUNES',
                 horaInicio: '08:00',
                 horaFin: '20:00'
+            }
+        ],
+        telefonos: ['1234567', '7654321'],
+        estado: 'ACTIVO',
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negocio'
+    },
+    {
+        codigo: 'Negocio2',
+        nombre: 'cine colombia',
+        descripcion: 'cine en Armenia',
+        codigoCliente: 'Cliente2',
+        ubicacion: {
+            latitud: 4.540130,
+            longitud: -75.665660
+        },
+        imagenes: ['imagen1', 'imagen2'],
+        tipoNegocio: 'RESTAURANTE',
+        horarios: [
+            {
+                dia: 'LUNES-Domingo',
+                horaInicio: '18:00',
+                horaFin: '00:00'
+            }
+        ],
+        telefonos: ['1234567', '7654321'],
+        estado: 'ACTIVO',
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negocio'
+    },
+    {
+        codigo: 'Negocio3',
+        nombre: 'museo quimbaya',
+        descripcion: 'museo del oro en Armenia',
+        codigoCliente: 'Cliente3',
+        ubicacion: {
+            latitud: 4.540130,
+            longitud: -75.665660
+        },
+        imagenes: ['imagen1', 'imagen2'],
+        tipoNegocio: 'RESTAURANTE',
+        horarios: [
+            {
+                dia: 'LUNES-Domingo',
+                horaInicio: '18:00',
+                horaFin: '00:00'
+            }
+        ],
+        telefonos: ['1234567', '7654321'],
+        estado: 'ACTIVO',
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negocio'
+    },
+    {
+        codigo: 'Negocio4',
+        nombre: 'jacobos burguer',
+        descripcion: 'Restaurante de comida rapida en Armenia',
+        codigoCliente: 'Cliente4',
+        ubicacion: {
+            latitud: 4.540130,
+            longitud: -75.665660
+        },
+        imagenes: ['imagen1', 'imagen2'],
+        tipoNegocio: 'RESTAURANTE',
+        horarios: [
+            {
+                dia: 'LUNES-Domingo',
+                horaInicio: '18:00',
+                horaFin: '00:00'
+            }
+        ],
+        telefonos: ['1234567', '7654321'],
+        estado: 'ACTIVO',
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negocio'
+    },
+    {
+        codigo: 'Negocio5',
+        nombre: 'bbc',
+        descripcion: 'bar en Armenia',
+        codigoCliente: 'Cliente5',
+        ubicacion: {
+            latitud: 4.540130,
+            longitud: -75.665660
+        },
+        imagenes: ['imagen1', 'imagen2'],
+        tipoNegocio: 'RESTAURANTE',
+        horarios: [
+            {
+                dia: 'LUNES-Domingo',
+                horaInicio: '18:00',
+                horaFin: '00:00'
             }
         ],
         telefonos: ['1234567', '7654321'],
