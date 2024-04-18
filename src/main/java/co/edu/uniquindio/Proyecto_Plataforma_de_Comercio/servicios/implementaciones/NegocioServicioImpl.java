@@ -96,4 +96,9 @@ public class NegocioServicioImpl implements NegocioServicio {
     public void rechazar(CambioEstadoDTO cambioEstadoDTO) throws Exception {
 
     }
+
+    @Override
+    public DetalleNegocioDTO obtenerNegocio(String codigo) throws Exception {
+        return null;
+    }
 }

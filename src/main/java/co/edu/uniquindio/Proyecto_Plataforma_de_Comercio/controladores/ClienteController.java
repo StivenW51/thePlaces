@@ -10,31 +10,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/clientes")
+@RequestMapping(value = "/api/clientes")
 @RequiredArgsConstructor
-public class ClienteControlador {
+public class ClienteController {
 
     private final ClienteServicio clienteServicio;
 
-    @PostMapping("/registrar-cliente")
-    public ResponseEntity<MensajeDTO<String>> registrarCliente(@Valid @RequestBody
-                                                               RegistroUsuarioDTO registroClienteDTO)throws Exception{
-        clienteServicio.registroCliente(registroClienteDTO);
-        return ResponseEntity.ok().body( new MensajeDTO<>(false, "Cliente registrado correctamente")
-        );
+    @PostMapping(value = "/registrar")
+    public ResponseEntity<MensajeDTO<String>> registrarCliente(@Valid @RequestBody RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
+       try{
+           clienteServicio.registroCliente(registroUsuarioDTO);
+           return ResponseEntity.ok().body(
+                   new MensajeDTO<>(false, "Cliente registrado correctamente"));
+       }
+       catch (Exception ex) {
+           return ResponseEntity.ok().body(
+                   new MensajeDTO<>(true, ex.getMessage()));
+       }
     }
 
     @GetMapping("/obtener/{codigo}")
-    public ResponseEntity<MensajeDTO<DetalleClienteDTO>> obtenerCliente(@PathVariable String
-                                                                                codigo) throws Exception{
+    public ResponseEntity<MensajeDTO<DetalleClienteDTO>> obtenerCliente(@PathVariable String codigo) throws Exception {
         return ResponseEntity.ok().body( new MensajeDTO<>(false,
                 clienteServicio.obtenerCliente(codigo) ) );
     }
 
     @DeleteMapping("/eliminar/{codigo}")
-    public ResponseEntity<MensajeDTO<String>> eliminarCuenta(@PathVariable String codigo)throws
-            Exception{
-        clienteServicio.eliminarCliente(codigo);
+    public ResponseEntity<MensajeDTO<String>> eliminarCuenta(@PathVariable String codigo) throws Exception{
+        clienteServicio.eliminarPerfil(codigo);
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Cliente eliminado correctamente")
         );
     }
