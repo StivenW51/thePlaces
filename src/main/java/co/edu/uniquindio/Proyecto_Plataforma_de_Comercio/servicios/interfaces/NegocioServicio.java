@@ -16,4 +16,5 @@ public interface NegocioServicio {
     void listarNegocioPorEstado()throws Exception; //preguntar como listar por estado
     void aprobar(CambioEstadoDTO cambioEstadoDTO)throws Exception;
     void rechazar(CambioEstadoDTO cambioEstadoDTO)throws Exception;
+    DetalleNegocioDTO obtenerNegocio(String codigo)throws Exception;
 }

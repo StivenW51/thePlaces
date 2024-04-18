@@ -1,4 +1,4 @@
-db = connect( 'mongodb://root:example@localhost:27017/Proyecto_Plataforma_de_Comercio?authSource=admin' );
+db = connect('mongodb://root:example@localhost:27017/Proyecto_Plataforma_de_Comercio?authSource=admin');
 db.clientes.insertMany([
     {
         codigo: 'Cliente1',
@@ -165,5 +165,49 @@ db.comentarios.insertMany([
         codigoNegocio: 'Negocio1',
         calificacion: 5,
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Comentario'
+    },
+
+    {
+        mensaje: 'Ambiente acogedor y excelente café',
+        fecha: new Date(),
+        codigoCliente: 'Cliente2',
+        codigoNegocio: 'Negocio2',
+        calificacion: 5,
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Comentario'
+    },
+
+    {
+        mensaje: 'Los mejores helados de la ciudad',
+        fecha: new Date(),
+        codigoCliente: 'Cliente8',
+        codigoNegocio: 'Negocio8',
+        calificacion: 5,
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Comentario'
+    },
+    {
+        mensaje: 'Excelente selección de ropa',
+        fecha: new Date(),
+        codigoCliente: 'Cliente6',
+        codigoNegocio: 'Negocio6',
+        calificacion: 4,
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Comentario'
+    },
+    {
+        mensaje: 'Las joyas son de alta calidad y buen precio',
+        fecha: new Date(),
+        codigoCliente: 'Cliente7',
+        codigoNegocio: 'Negocio7',
+        calificacion: 5,
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Comentario'
+    },
+    {
+        mensaje: 'Un lugar perfecto para encontrar buenos libros',
+        fecha: new Date(),
+        codigoCliente: 'Cliente8',
+        codigoNegocio: 'Negocio8',
+        calificacion: 5,
+        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Comentario'
     }
+
+
 ]);
