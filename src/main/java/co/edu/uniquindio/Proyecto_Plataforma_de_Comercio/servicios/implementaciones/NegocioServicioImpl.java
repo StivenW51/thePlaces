@@ -5,6 +5,7 @@ import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negoc
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.ClienteRepo;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.NegocioRepo;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.NegocioServicio;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,14 +14,14 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class NegocioServicioImpl implements NegocioServicio {
 
     private final NegocioRepo negocioRepo;
 
-    public NegocioServicioImpl (NegocioRepo negocioRepo){this.negocioRepo = negocioRepo; }
-
-    private Negocio traerCodigoNegocio(String codigo)throws Exception{
+    private Negocio obtenerNegocioCodigo(String codigo)throws Exception{
         Optional<Negocio> optionalNegocio = negocioRepo.findByCodigo(codigo);
+
         if (optionalNegocio.isPresent()){
             return optionalNegocio.get();
         }
@@ -29,19 +30,26 @@ public class NegocioServicioImpl implements NegocioServicio {
         }
     }
 
-
     @Override
     public String crearNegocio(CrearNegocioDTO crearNegocioDTO) throws Exception {
-
         //instanciamos el negocio
         Negocio negocio = new Negocio();
 
-        negocio.setNombre(crearNegocioDTO.nombreNegocio());
+        negocio.setNombre(crearNegocioDTO.nombre());
+        negocio.setTipoNegocio(crearNegocioDTO.tipoNegocio());
+        negocio.setDescripcion(crearNegocioDTO.descripcion());
+        negocio.setDireccion(crearNegocioDTO.direccion());
+        negocio.setImagenes(crearNegocioDTO.imagenes());
+        negocio.setUbicacion(crearNegocioDTO.ubicacion());
+        negocio.setHorarios(crearNegocioDTO.horarios());
+        negocio.setEstadoRegistro(crearNegocioDTO.estadoRegistro());
+        negocio.setEstadoNegocio(crearNegocioDTO.estadoNegocio());
+        negocio.setTelefonos(crearNegocioDTO.telefonos());
+        negocio.setCodigoCliente(crearNegocioDTO.codigoCliente());
 
         Negocio negocioGuardado = negocioRepo.save(negocio);
 
         return negocioGuardado.getCodigo();
-
     }
 
     @Override

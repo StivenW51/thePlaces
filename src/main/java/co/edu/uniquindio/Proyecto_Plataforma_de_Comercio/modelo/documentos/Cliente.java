@@ -14,7 +14,7 @@ import java.util.Objects;
 @ToString(callSuper = true)
 //solo se debe considerar la llave primaria de la clase entonces por ese se coloca el onlyExpl,aca y en el Id
 //@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@Document("Clientes")
+@Document("clientes")
 @NoArgsConstructor
 public class Cliente implements Serializable {
 
@@ -25,17 +25,17 @@ public class Cliente implements Serializable {
     private String nombre;
     private String apellido;
     private String ciudad;
-    private String fotoPerfil;
-    private Cuenta cuenta;
+    private String idCuenta;
     private List<String> telefono;
+    private List<String> favoritos;
 
     @Builder
-    public Cliente(String email, String nickname, String password, String cedula, String nombre, String apellido, String ciudad,  List<String> telefono, String fotoPerfil) {
-        //super(email, nickname, password, null);
+    public Cliente(String cedula, String nombre, String apellido,
+                   String ciudad,  List<String> telefono,
+                   int idCuenta) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
-        this.fotoPerfil = fotoPerfil;
     }
 }

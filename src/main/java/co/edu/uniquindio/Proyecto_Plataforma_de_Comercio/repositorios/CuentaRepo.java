@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface CuentaRepo extends MongoRepository<Cuenta, Integer> {
-    Optional<Cuenta> findById(int id);
+    Optional<Cuenta> findById(String id);
     Optional<Cuenta> findByEmail(String email);
+    Optional<Cuenta> findByNickname(String email);
 }

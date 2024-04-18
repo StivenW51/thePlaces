@@ -22,16 +22,7 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     private final ClienteRepo clienteRepo;
     private final CuentaRepo cuentaRepo;
-
-
-    private boolean existeEmail(String emain){
-        return true;
-                //clienteRepo.findByEmail(emain).isPresent();
-    }
-
-    private boolean existeNickname(String nickname){
-        return true; //clienteRepo.findByNickname(nickname).isPresent();
-    }
+    private final CuentaServicioImpl cuentaServicio;
 
     private boolean existeCedula(String cedula){
         return clienteRepo.findByCedula(cedula).isPresent();
@@ -50,24 +41,22 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public String registroCliente(RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
 
-        //verificamos que el email sea único
-        if(existeEmail(registroUsuarioDTO.email())){
-            throw new Exception("El correo ya se encuentra registrado");
-        }
-
-        //verificamos que el nickname sea unico
-        if(existeNickname(registroUsuarioDTO.nickname())){
-            throw new Exception("El nickname ya se encuentra en uso");
-        }
+        //creamos el objeto cliente
+        Cliente cliente = new Cliente();
+        Cuenta cuenta = new Cuenta();
 
         //verificamos que la cedula sea unica
         if(existeCedula(registroUsuarioDTO.cedula())){
             throw new Exception("La Cedula ya se encuentra registrada");
         }
 
-        //creamos el objeto cliente
-        Cliente cliente = new Cliente();
-        Cuenta cuenta = new Cuenta();
+        RegistroCuentaDTO registroCuentaDTO = new RegistroCuentaDTO(registroUsuarioDTO.email(),
+                                                                    registroUsuarioDTO.nickname(),
+                                                                    registroUsuarioDTO.password(),
+                                                                    registroUsuarioDTO.fotoPerfil(),
+                                                        true ) ;
+        cuentaServicio.crearCuenta(registroCuentaDTO);
+        cuenta = cuentaServicio.obtenerCuentaPorEmail(registroCuentaDTO.email());
 
         //asignamos los campos de cada atributo
         cliente.setCedula(registroUsuarioDTO.cedula());
@@ -75,13 +64,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         cliente.setApellido(registroUsuarioDTO.apellido());
         cliente.setCiudad(registroUsuarioDTO.ciudadResidencia());
 
-        cuenta.setNickname(registroUsuarioDTO.nickname());
-        cuenta.setEmail(registroUsuarioDTO.email());
-        cuenta.setPassword(registroUsuarioDTO.password());
-        cuenta.setPassword(registroUsuarioDTO.repitaPassword());
-        cuenta.setEstadoRegistro(EstadoRegistro.ACTIVO);
-
-        cliente.setCuenta(cuenta);
+        cliente.setIdCuenta(cuenta.getId());
 
         //Guardamos en la base de datos y obtenemos el objeto registrado
         Cliente clienteGuardado = clienteRepo.save(cliente);
@@ -92,17 +75,17 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public void actualizarPerfil(ActualizacionUsuarioDTO actualizacionUsuarioDTO) throws Exception {
-
         //Buscamos el cliente a actualizar
         //traerCodigoCliente(actualizacionUsuarioDTO.id());
-        Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(actualizacionUsuarioDTO.id());
+        Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(actualizacionUsuarioDTO.codigo());
+        Cuenta cuenta = cuentaServicio.obtenerCuentaPorId(actualizacionUsuarioDTO.idCuenta());
 
         //Excepcion por si no encontramos el cliente
         if (optionalCliente.isEmpty()){
             throw new Exception("No se encontro el cliente a actualizar");
         }
 
-        if (existeEmail(actualizacionUsuarioDTO.email())){
+        if (cuentaServicio.existeEmail(actualizacionUsuarioDTO.email())){
             throw new Exception("El email ingresado ya se encuentra en uso");
         }
 
@@ -110,9 +93,14 @@ public class ClienteServicioImpl implements ClienteServicio {
         Cliente cliente = optionalCliente.get();
         cliente.setNombre(actualizacionUsuarioDTO.nombre());
         cliente.setApellido(actualizacionUsuarioDTO.apellido());
-        cliente.getCuenta().setEmail(actualizacionUsuarioDTO.email());
         cliente.setCiudad(actualizacionUsuarioDTO.ciudadResidencia());
-        cliente.setFotoPerfil(actualizacionUsuarioDTO.fotoPerfil());
+        cliente.setTelefono(actualizacionUsuarioDTO.telefono());
+
+        ActualizarCuentaDTO actualizarCuentaDTO = new ActualizarCuentaDTO(actualizacionUsuarioDTO.idCuenta(),
+                actualizacionUsuarioDTO.email(), actualizacionUsuarioDTO.fotoPerfil(),actualizacionUsuarioDTO.token());
+
+        //actualizamos el email de la cuenta
+        cuentaServicio.actualizarCuenta(actualizarCuentaDTO);
 
         //como el objeto cliente ya tiene un id, el save() no crea un nuevo registro sino que actualiza el que ya existe
         clienteRepo.save(cliente);
@@ -120,23 +108,20 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public void eliminarCliente(String idCliente) throws Exception {
+    public void eliminarPerfil(String idCliente) throws Exception {
 
         //buscamos el cliente que se quiere eliminar
         Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(idCliente);
 
         //sino se encuentra el cliente lanzamos una excepcion
-        if(optionalCliente.isEmpty()){
+        if (optionalCliente.isEmpty()) {
             throw new Exception("El cliente no se ha encontrado");
         }
 
         //si encontramos el cliente entonces lo obtenemos y le cambiamos el estado a inactivo
         Cliente cliente = optionalCliente.get();
-        cliente.getCuenta().setEstadoRegistro(EstadoRegistro.INACTIVO);
 
-        //como el objeto cliente ya tiene un id, el save() no crea un nuevo registro sino que actualiza el que ya existe
-        clienteRepo.save(cliente);
-
+        cuentaServicio.inactivarCuenta(cliente.getIdCuenta());
     }
 
     @Override
@@ -181,7 +166,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         Cliente cliente = optionalCliente.get();
 
         //Retornamos el cliente en formato DTO
-        return new DetalleClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getFotoPerfil(), cliente.getCuenta().getNickname(), cliente.getCuenta().getEmail(), cliente.getCiudad());
+        return null; //new DetalleClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getFotoPerfil(), cliente.getCuenta().getNickname(), cliente.getCuenta().getEmail(), cliente.getCiudad());
     }
 
     @Override
@@ -195,7 +180,7 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         //recorremos la lista de clientes y por cada uno creamos un DTO y lo agregamos a la lista
         for (Cliente cliente : clientes){
-            items.add(new ItemClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getApellido(), cliente.getCuenta().getEmail(), cliente.getCuenta().getNickname(), cliente.getCiudad(), cliente.getFotoPerfil()));
+            items.add(null); //new ItemClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getApellido(), cliente.getCuenta().getEmail(), cliente.getCuenta().getNickname(), cliente.getCiudad(), cliente.getFotoPerfil()));
         }
 
         return items;

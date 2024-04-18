@@ -1,9 +1,8 @@
 package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos;
 
-import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.HistorialRevisiones;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Horario;
-import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Telefonos;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Ubicacion;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoNegocio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegistro;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.TipoNegocio;
 import lombok.*;
@@ -24,16 +23,15 @@ public class Negocio implements Serializable {
     @Id
     @EqualsAndHashCode.Include
     private String codigo;
-
     private String nombre;
-    private List<TipoNegocio> tipoNegocio;
-    private String descripcion, direccion, imagenes;
+    private TipoNegocio tipoNegocio;
+    private String descripcion;
+    private String direccion;
+    private List<String> imagenes;
     private Ubicacion ubicacion;
-    private Horario horarios;
+    private List<Horario> horarios;
     private EstadoRegistro estadoRegistro;
-    private List<HistorialRevisiones> historialRevisiones;
-    private List<Telefonos> telefonos;
-    private Cliente codigoCliente;
-    private List<String> favoritos;
-    private float calificacion;
+    private EstadoNegocio estadoNegocio;
+    private List<String> telefonos;
+    private String codigoCliente;
 }

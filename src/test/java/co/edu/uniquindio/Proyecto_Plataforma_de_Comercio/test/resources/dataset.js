@@ -34,17 +34,6 @@ db.clientes.insertMany([
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
     },
     {
-        codigo: 'Cliente4',
-        nickname: 'stivenw51',
-        ciudad: 'Armenia',
-        fotoPerfil: 'mi foto',
-        email: 'stivenavs@email.com',
-        password: 'jsr',
-        nombre: 'stiven restrepo',
-        estado: 'ACTIVO',
-        _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
-    },
-    {
         codigo: 'Cliente5',
         nickname: 'ezequielito',
         ciudad: 'Armenia',
