@@ -34,4 +34,5 @@ public class Negocio implements Serializable {
     private EstadoNegocio estadoNegocio;
     private List<String> telefonos;
     private String codigoCliente;
+    private String idModerador;
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -28,7 +29,8 @@ public class ClienteServicioTest {
                 "stivenavs56@gmail.com",
                 "Armenia",
                 "jsr.1956",
-                "xxx");
+                "xxx",
+                new ArrayList<String>(Arrays.asList("3148327271","301762000")));
 
         //Se registra el cliente
         String codigo = clienteServicio.registroCliente(registroUsuarioDTO);

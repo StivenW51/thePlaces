@@ -27,6 +27,8 @@ public record RegistroUsuarioDTO(
         @NotBlank
         String fotoPerfil,
         @NotNull
-        List<String> telefono
+        List<String> telefono,
+        @NotNull
+        List<String> favoritos
 ) {
 }

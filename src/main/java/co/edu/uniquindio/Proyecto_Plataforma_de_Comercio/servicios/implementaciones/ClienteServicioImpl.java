@@ -2,11 +2,13 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.implementaci
 
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.*;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negocio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Cuenta;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegistro;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.ClienteRepo;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.CuentaRepo;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ClienteServicio;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.NegocioServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,20 +25,12 @@ public class ClienteServicioImpl implements ClienteServicio {
     private final ClienteRepo clienteRepo;
     private final CuentaRepo cuentaRepo;
     private final CuentaServicioImpl cuentaServicio;
+    private final NegocioServicioImpl negocioServicio;
 
     private boolean existeCedula(String cedula){
         return clienteRepo.findByCedula(cedula).isPresent();
     }
 
-    private Cliente traerCodigoCliente(String codigo)throws Exception{
-        Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(codigo);
-        if (optionalCliente.isPresent()){
-            return optionalCliente.get();
-        }
-        else {
-            throw new Exception("el cliente con el codigo " + codigo + " no se ha encontrado");
-        }
-    }
 
     @Override
     public String registroCliente(RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
@@ -165,9 +159,15 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         //si se encuentra el cliente encontra lo traemos con el get
         Cliente cliente = optionalCliente.get();
+        Cuenta cuenta = cuentaServicio.obtenerCuentaPorId(cliente.getIdCuenta());
 
         //Retornamos el cliente en formato DTO
-        return null; //new DetalleClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getFotoPerfil(), cliente.getCuenta().getNickname(), cliente.getCuenta().getEmail(), cliente.getCiudad());
+        return new DetalleClienteDTO(cliente.getCodigo(),
+                cliente.getNombre(),
+                cuenta.getFotoPerfil(),
+                cuenta.getNickname(),
+                cuenta.getEmail(),
+                cliente.getCiudad());
     }
 
     @Override
@@ -185,5 +185,57 @@ public class ClienteServicioImpl implements ClienteServicio {
         }
 
         return items;
+    }
+
+    @Override
+    public List<DetalleNegocioDTO> listarFavoritos(String idCliente) throws Exception {
+        Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(idCliente);
+        List<DetalleNegocioDTO> listDetalleNegocioDTO = new ArrayList<>();
+        Negocio negocio;
+
+        Cliente cliente = optionalCliente.get();
+        List<String> favoritos = cliente.getFavoritos();
+
+        for(String idNegocio : favoritos){
+            listDetalleNegocioDTO.add(negocioServicio.obtenerNegocioCodigo(idNegocio));
+        }
+
+        return listDetalleNegocioDTO;
+    }
+
+    @Override
+    public void AgregarFavorito(FavoritoDTO favoritoDTO) throws Exception {
+        Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(favoritoDTO.idCliente());
+        Cliente cliente = optionalCliente.get();
+
+        List<String> favoritos = cliente.getFavoritos();
+
+        for(String idNegocio : favoritos){
+            if(idNegocio.equals(favoritoDTO.idNegocio())){
+                throw new Exception("Favorito ya existe");
+            }
+        }
+
+        favoritos.add(favoritoDTO.idNegocio());
+        cliente.setFavoritos(favoritos);
+
+        clienteRepo.save(cliente);
+    }
+
+    @Override
+    public void QuitarFavorito(FavoritoDTO favoritoDTO) throws Exception {
+        Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(favoritoDTO.idCliente());
+        Cliente cliente = optionalCliente.get();
+
+        List<String> favoritos = cliente.getFavoritos();
+
+        for(String idNegocio : favoritos){
+            if(idNegocio.equals(favoritoDTO.idNegocio())){
+                favoritos.remove(favoritoDTO.idNegocio());
+            }
+        }
+
+        cliente.setFavoritos(favoritos);
+        clienteRepo.save(cliente);
     }
 }

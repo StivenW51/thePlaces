@@ -6,6 +6,7 @@ import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoNego
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegistro;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.TipoNegocio;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public record CrearNegocioDTO(
         @NotBlank @Length (max = 100)
         String nombre,
 
-        @NotBlank
+        @NotNull
         TipoNegocio tipoNegocio,
 
         @NotBlank @Length (max = 200)
@@ -22,25 +23,28 @@ public record CrearNegocioDTO(
 
         @NotBlank @Length (max = 100)
         String direccion,
-        @NotBlank
+
+        @NotNull
         List<String> imagenes,
 
-        @NotBlank
+        @NotNull
         Ubicacion ubicacion,
 
-        @NotBlank
+        @NotNull
         List<Horario> horarios,
 
-        @NotBlank
+        @NotNull
         EstadoRegistro estadoRegistro,
 
-        @NotBlank
+        @NotNull
         EstadoNegocio estadoNegocio,
 
-        @NotBlank
+        @NotNull
         List<String> telefonos,
 
         @NotBlank
-        String codigoCliente
+        String codigoCliente,
+
+        String idModerador
 ) {
 }

@@ -4,19 +4,39 @@ import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Horari
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Ubicacion;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.TipoNegocio;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 public record DetalleNegocioDTO(
 
-        @NotBlank String id,
-        @NotBlank String imagenes,
-        @NotBlank @Length(max = 100) String nombreNegocio,
-        @NotBlank @Length (max = 100) String direccion,
+        @NotBlank @Length(max = 100)
+        String nombreNegocio,
+
+        @NotBlank @Length (max = 100)
+        String direccion,
+
+        @NotNull
+        List<Horario> horarios,
+
+        @NotNull
+        Ubicacion ubicacion,
+
+        @NotNull
+        TipoNegocio categoria,
+
+
+        @NotNull
+        List<String> imagenes,
+
+
         @NotBlank String telefonos,
-        @NotBlank TipoNegocio categoria,
-        @NotBlank @Length (max = 200) String descripcion,
-        @NotBlank Horario horarios,
-        @NotBlank Ubicacion ubicacion
+
+        @NotBlank @Length (max = 200)
+        String descripcion
+
+
 
 ) {
 }

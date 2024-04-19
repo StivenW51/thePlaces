@@ -8,9 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class Horario {
     String dia;
-    String HoraInicio;
-    String HoraFinal;
+    String horaInicio;
+    String horaFinal;
 }
