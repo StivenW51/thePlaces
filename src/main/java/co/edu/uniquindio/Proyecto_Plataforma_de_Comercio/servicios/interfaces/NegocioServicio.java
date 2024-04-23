@@ -17,8 +17,6 @@ public interface NegocioServicio {
     void eliminarNegocio(String idNegocio) throws Exception;
     void CambiarEstadoRegistro(CambioEstadoRegistroDTO cambioEstadoRegistroDTO) throws Exception;
     List<DetalleNegocioDTO> listarNegociosActivosAprobados() throws Exception;
-    List<DetalleNegocioDTO> listarNegociosAprobadosModerador(String idModerador) throws Exception;
-    List<DetalleNegocioDTO> listarNegociosRechazadosModerador(String idModerador) throws Exception;
     List<DetalleNegocioDTO> listarNegociosPendientes() throws Exception;
     List<DetalleNegocioDTO> listarNegocioNombreOTipo(NegocioNombreTipoDistanciaDTO negocioNombreTipoDistanciaDTO) throws Exception;
 }

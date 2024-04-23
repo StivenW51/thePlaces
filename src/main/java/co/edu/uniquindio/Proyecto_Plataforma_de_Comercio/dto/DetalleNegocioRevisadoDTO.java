@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
-public record DetalleNegocioDTO(
+public record DetalleNegocioRevisadoDTO(
 
         @NotBlank @Length(max = 100)
         String nombreNegocio,
@@ -35,6 +35,9 @@ public record DetalleNegocioDTO(
         List<String> telefonos,
 
         @NotBlank @Length (max = 200)
-        String descripcion
+        String descripcion,
+
+        @NotBlank
+        String observacion
 ) {
 }

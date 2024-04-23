@@ -22,6 +22,13 @@ public class NegocioServicioImpl implements NegocioServicio {
 
     private final NegocioRepo negocioRepo;
 
+    /**
+     * Obtiene los datos de un negocio dado su codigo
+     * @param codigo
+     * @return
+     * @throws Exception
+     */
+    @Override
     public DetalleNegocioDTO obtenerNegocioCodigo(String codigo)throws Exception{
         Optional<Negocio> optionalNegocio = negocioRepo.findByCodigo(codigo);
         Negocio negocio;
@@ -45,6 +52,12 @@ public class NegocioServicioImpl implements NegocioServicio {
         }
     }
 
+    /**
+     * Registra los datos de un negocio
+     * @param crearNegocioDTO
+     * @return
+     * @throws Exception
+     */
     @Override
     public String crearNegocio(CrearNegocioDTO crearNegocioDTO) throws Exception {
         //instanciamos el negocio
@@ -67,6 +80,11 @@ public class NegocioServicioImpl implements NegocioServicio {
         return negocioGuardado.getCodigo();
     }
 
+    /**
+     * Actualiza los datos de un negocio
+     * @param editarNegocioDTO
+     * @throws Exception
+     */
     @Override
     public void actualizarNegocio(EditarNegocioDTO editarNegocioDTO) throws Exception {
 
@@ -96,6 +114,11 @@ public class NegocioServicioImpl implements NegocioServicio {
 
     }
 
+    /**
+     * Realiza un borrado logico del negocio
+     * @param idNegocio
+     * @throws Exception
+     */
     @Override
     public void eliminarNegocio(String idNegocio) throws Exception {
         Optional<Negocio> optionalNegocio = negocioRepo.findByCodigo(idNegocio);
@@ -110,6 +133,13 @@ public class NegocioServicioImpl implements NegocioServicio {
         negocioRepo.save(negocio);
     }
 
+
+    /**
+     * Lista los negocio dado un id de cliente (propietario)
+     * @param idCliente
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<DetalleNegocioDTO> listarNegociosCliente(String idCliente) throws Exception {
         List<Negocio> listaNegocios = new ArrayList<>();
@@ -145,6 +175,11 @@ public class NegocioServicioImpl implements NegocioServicio {
         return listaDetalleNegocio;
     }
 
+    /**
+     * Lista los negocios que cumplen con todos los requisitos de la plataforma
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<DetalleNegocioDTO> listarNegociosActivosAprobados() throws Exception {
         List<Negocio> listaNegocios = new ArrayList<>();
@@ -176,70 +211,12 @@ public class NegocioServicioImpl implements NegocioServicio {
         return listaDetalleNegocio;
     }
 
-    @Override
-    public List<DetalleNegocioDTO> listarNegociosAprobadosModerador(String idModerador) throws Exception {
-        List<Negocio> listaNegocios = new ArrayList<>();
-        Optional<List<Negocio>> optionalNegocios = negocioRepo.findByEstadoRegistroAndIdModerador(EstadoRegistro.APROBADO, idModerador);
-        List<DetalleNegocioDTO> listaDetalleNegocio = new ArrayList<>();
-        Negocio negocio;
 
-        if(optionalNegocios.isEmpty()){
-            throw new Exception("el cliente no tiene negocios");
-        }
-        else{
-            listaNegocios = optionalNegocios.get();
-
-            for(int i = 0; i < listaNegocios.size(); i++){
-                negocio = listaNegocios.get(i);
-
-                listaDetalleNegocio.add(new DetalleNegocioDTO(
-                        negocio.getNombre(),
-                        negocio.getDireccion(),
-                        negocio.getHorarios(),
-                        negocio.getUbicacion(),
-                        negocio.getTipoNegocio(),
-                        negocio.getImagenes(),
-                        negocio.getTelefonos(),
-                        negocio.getDescripcion()
-                ));
-            }
-        }
-
-        return listaDetalleNegocio;
-    }
-
-    @Override
-    public List<DetalleNegocioDTO> listarNegociosRechazadosModerador(String idModerador) throws Exception {
-        List<Negocio> listaNegocios = new ArrayList<>();
-        Optional<List<Negocio>> optionalNegocios = negocioRepo.findByEstadoRegistroAndIdModerador(EstadoRegistro.RECHAZADO, idModerador);
-        List<DetalleNegocioDTO> listaDetalleNegocio = new ArrayList<>();
-        Negocio negocio;
-
-        if(optionalNegocios.isEmpty()){
-            throw new Exception("el cliente no tiene negocios");
-        }
-        else{
-            listaNegocios = optionalNegocios.get();
-
-            for(int i = 0; i < listaNegocios.size(); i++){
-                negocio = listaNegocios.get(i);
-
-                listaDetalleNegocio.add(new DetalleNegocioDTO(
-                        negocio.getNombre(),
-                        negocio.getDireccion(),
-                        negocio.getHorarios(),
-                        negocio.getUbicacion(),
-                        negocio.getTipoNegocio(),
-                        negocio.getImagenes(),
-                        negocio.getTelefonos(),
-                        negocio.getDescripcion()
-                ));
-            }
-        }
-
-        return listaDetalleNegocio;
-    }
-
+    /**
+     * Lista los negocios que están pendientes de revisión
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<DetalleNegocioDTO> listarNegociosPendientes() throws Exception {
         List<Negocio> listaNegocios = new ArrayList<>();
@@ -272,6 +249,12 @@ public class NegocioServicioImpl implements NegocioServicio {
         return listaDetalleNegocio;
     }
 
+    /**
+     * Realiza un busqueda por coincidencia de los negocios dado un nombre o una catyegoría
+     * @param negocioNombreTipoDistanciaDTO
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<DetalleNegocioDTO> listarNegocioNombreOTipo(NegocioNombreTipoDistanciaDTO negocioNombreTipoDistanciaDTO) throws Exception {
         List<Negocio> listaNegocios = new ArrayList<>();
@@ -307,6 +290,11 @@ public class NegocioServicioImpl implements NegocioServicio {
         return listaDetalleNegocio;
     }
 
+    /**
+     * Realiza una actualización del estado del registro del negocio (APROBADO, RECHAZADO)
+     * @param cambioEstadoRegistroDTO
+     * @throws Exception
+     */
     @Override
     public void CambiarEstadoRegistro(CambioEstadoRegistroDTO cambioEstadoRegistroDTO) throws Exception{
         Optional<Negocio> optionalNegocio = negocioRepo.findByCodigo(cambioEstadoRegistroDTO.idNegocio());

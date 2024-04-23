@@ -4,16 +4,10 @@ import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegi
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
-
-public record DetalleRegistroModeradorDTO(
-        @NotBlank
-        String idNegocio,
+public record EstadoRegistroModeradorDTO(
         @NotBlank
         String idModerador,
         @NotNull
-        EstadoRegistro estadoRegistro,
-        String observacion,
-        LocalDate fechaRegistro
+        EstadoRegistro estadoRegistro
 ) {
 }

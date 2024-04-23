@@ -75,30 +75,6 @@ public class NegocioController {
         }
     }
 
-    @GetMapping(value = "/listarNegociosAprobadosModerador/{idModerador}")
-    public ResponseEntity<MensajeDTO<Object>> listarNegociosAprobadosModerador(@PathVariable String idModerador) throws Exception{
-        try{
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(false, negocioServicio.listarNegociosAprobadosModerador(idModerador)));
-        }
-        catch (Exception ex) {
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(true, ex.getMessage()));
-        }
-    }
-
-    @GetMapping(value = "/listarNegociosRechazadosModerador/{idModerador}")
-    public ResponseEntity<MensajeDTO<Object>> listarNegociosRechazadosModerador(@PathVariable String idModerador) throws Exception{
-        try{
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(false, negocioServicio.listarNegociosRechazadosModerador(idModerador)));
-        }
-        catch (Exception ex) {
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(true, ex.getMessage()));
-        }
-    }
-
     @GetMapping(value = "/listarNegociosPendientes")
     public ResponseEntity<MensajeDTO<Object>> listarNegociosPendientes() throws Exception{
         try{
