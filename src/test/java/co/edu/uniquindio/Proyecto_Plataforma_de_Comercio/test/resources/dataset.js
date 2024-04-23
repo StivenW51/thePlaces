@@ -1,4 +1,4 @@
-db = connect('mongodb://root:example@localhost:27017/Proyecto_Plataforma_de_Comercio?authSource=admin');
+db = connect('mongodb://root:example@localhost:27017/the_places?authSource=admin');
 db.clientes.insertMany([
     {
         _id: ObjectId('66217d234d458c2ee3f5d252'),
@@ -10,7 +10,7 @@ db.clientes.insertMany([
         telefono: [
             '3148327292'
         ],
-        favoritos:[],
+        favoritos:["123"],
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
     },
     {
@@ -23,7 +23,7 @@ db.clientes.insertMany([
         telefono: [
             '3148327293'
         ],
-        favoritos:[],
+        favoritos:["123"],
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
     },
     {
@@ -36,7 +36,7 @@ db.clientes.insertMany([
         telefono: [
             '3148327294'
         ],
-        favoritos:[],
+        favoritos:["123"],
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
     },
     {
@@ -49,7 +49,7 @@ db.clientes.insertMany([
         telefono: [
             '3148327295'
         ],
-        favoritos:[],
+        favoritos:["123"],
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
     },
     {
@@ -62,7 +62,7 @@ db.clientes.insertMany([
         telefono: [
             '3148327296'
         ],
-        favoritos:[],
+        favoritos:["123"],
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
     },
     {
@@ -75,7 +75,7 @@ db.clientes.insertMany([
         telefono: [
             '3148327297'
         ],
-        favoritos:[],
+        favoritos:["123"],
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
     },
     {
@@ -88,7 +88,7 @@ db.clientes.insertMany([
         telefono: [
             '3148327298'
         ],
-        favoritos:[],
+        favoritos:["123"],
         _class: 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente'
     }
 ]);

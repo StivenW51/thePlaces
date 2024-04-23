@@ -4,6 +4,7 @@ import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.*;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negocio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoNegocio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegistro;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.TipoNegocio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.NegocioRepo;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.NegocioServicio;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getUbicacion(),
                     negocio.getTipoNegocio(),
                     negocio.getImagenes(),
-                    negocio.getCodigo(),
+                    negocio.getTelefonos(),
                     negocio.getDescripcion()
             );
         }
@@ -119,55 +120,57 @@ public class NegocioServicioImpl implements NegocioServicio {
         if(optionalNegocios.isEmpty()){
             throw new Exception("el cliente no tiene negocios");
         }
-        else{
-            listaNegocios = optionalNegocios.get();
 
-            for(int i = 0; i < listaNegocios.size(); i++){
-               negocio = listaNegocios.get(i);
+        listaNegocios = optionalNegocios.get();
 
-                listaDetalleNegocio.add(new DetalleNegocioDTO(
-                        negocio.getNombre(),
-                        negocio.getDireccion(),
-                        negocio.getHorarios(),
-                        negocio.getUbicacion(),
-                        negocio.getTipoNegocio(),
-                        negocio.getImagenes(),
-                        negocio.getCodigo(),
-                        negocio.getDescripcion()
-                ));
-            }
+       if(listaNegocios.size() == 0){
+           throw new Exception("el cliente no tiene negocios");
+       }
+
+        for(int i = 0; i < listaNegocios.size(); i++){
+           negocio = listaNegocios.get(i);
+
+            listaDetalleNegocio.add(new DetalleNegocioDTO(
+                    negocio.getNombre(),
+                    negocio.getDireccion(),
+                    negocio.getHorarios(),
+                    negocio.getUbicacion(),
+                    negocio.getTipoNegocio(),
+                    negocio.getImagenes(),
+                    negocio.getTelefonos(),
+                    negocio.getDescripcion()
+            ));
         }
 
         return listaDetalleNegocio;
     }
 
     @Override
-    public List<DetalleNegocioDTO> listarNegociosActivos() throws Exception {
+    public List<DetalleNegocioDTO> listarNegociosActivosAprobados() throws Exception {
         List<Negocio> listaNegocios = new ArrayList<>();
-        Optional<List<Negocio>> optionalNegocios = negocioRepo.findByEstadoNegocio(EstadoNegocio.ACTIVO);
+        Optional<List<Negocio>> optionalNegocios = negocioRepo.findByEstadoNegocioAndEstadoRegistro(EstadoNegocio.ACTIVO, EstadoRegistro.APROBADO);
         List<DetalleNegocioDTO> listaDetalleNegocio = new ArrayList<>();
         Negocio negocio;
 
         if(optionalNegocios.isEmpty()){
-            throw new Exception("el cliente no tiene negocios");
+            throw new Exception("No hay negocios");
         }
-        else{
-            listaNegocios = optionalNegocios.get();
 
-            for(int i = 0; i < listaNegocios.size(); i++){
-                negocio = listaNegocios.get(i);
+        listaNegocios = optionalNegocios.get();
 
-                listaDetalleNegocio.add(new DetalleNegocioDTO(
-                        negocio.getNombre(),
-                        negocio.getDireccion(),
-                        negocio.getHorarios(),
-                        negocio.getUbicacion(),
-                        negocio.getTipoNegocio(),
-                        negocio.getImagenes(),
-                        negocio.getCodigo(),
-                        negocio.getDescripcion()
-                ));
-            }
+        for(int i = 0; i < listaNegocios.size(); i++){
+            negocio = listaNegocios.get(i);
+
+            listaDetalleNegocio.add(new DetalleNegocioDTO(
+                    negocio.getNombre(),
+                    negocio.getDireccion(),
+                    negocio.getHorarios(),
+                    negocio.getUbicacion(),
+                    negocio.getTipoNegocio(),
+                    negocio.getImagenes(),
+                    negocio.getTelefonos(),
+                    negocio.getDescripcion()
+            ));
         }
 
         return listaDetalleNegocio;
@@ -196,7 +199,7 @@ public class NegocioServicioImpl implements NegocioServicio {
                         negocio.getUbicacion(),
                         negocio.getTipoNegocio(),
                         negocio.getImagenes(),
-                        negocio.getCodigo(),
+                        negocio.getTelefonos(),
                         negocio.getDescripcion()
                 ));
             }
@@ -228,7 +231,7 @@ public class NegocioServicioImpl implements NegocioServicio {
                         negocio.getUbicacion(),
                         negocio.getTipoNegocio(),
                         negocio.getImagenes(),
-                        negocio.getCodigo(),
+                        negocio.getTelefonos(),
                         negocio.getDescripcion()
                 ));
             }
@@ -260,7 +263,7 @@ public class NegocioServicioImpl implements NegocioServicio {
                         negocio.getUbicacion(),
                         negocio.getTipoNegocio(),
                         negocio.getImagenes(),
-                        negocio.getCodigo(),
+                        negocio.getTelefonos(),
                         negocio.getDescripcion()
                 ));
             }
@@ -270,8 +273,43 @@ public class NegocioServicioImpl implements NegocioServicio {
     }
 
     @Override
+    public List<DetalleNegocioDTO> listarNegocioNombreOTipo(NegocioNombreTipoDistanciaDTO negocioNombreTipoDistanciaDTO) throws Exception {
+        List<Negocio> listaNegocios = new ArrayList<>();
+        Optional<List<Negocio>> optionalNegocios = negocioRepo.findByNombreIsLikeOrTipoNegocioIsLike(negocioNombreTipoDistanciaDTO.nombre(), negocioNombreTipoDistanciaDTO.tipoNegocio().toUpperCase());
+        List<DetalleNegocioDTO> listaDetalleNegocio = new ArrayList<>();
+        Negocio negocio;
+
+        if(optionalNegocios.isEmpty()){
+            throw new Exception("No hay negocios");
+        }
+
+        listaNegocios = optionalNegocios.get();
+
+        if(listaNegocios.size() == 0){
+            throw new Exception("No hay negocios");
+        }
+
+        for(int i = 0; i < listaNegocios.size(); i++){
+            negocio = listaNegocios.get(i);
+
+            listaDetalleNegocio.add(new DetalleNegocioDTO(
+                    negocio.getNombre(),
+                    negocio.getDireccion(),
+                    negocio.getHorarios(),
+                    negocio.getUbicacion(),
+                    negocio.getTipoNegocio(),
+                    negocio.getImagenes(),
+                    negocio.getTelefonos(),
+                    negocio.getDescripcion()
+            ));
+        }
+
+        return listaDetalleNegocio;
+    }
+
+    @Override
     public void CambiarEstadoRegistro(CambioEstadoRegistroDTO cambioEstadoRegistroDTO) throws Exception{
-        Optional<Negocio> optionalNegocio = negocioRepo.findByCodigo(cambioEstadoRegistroDTO.id());
+        Optional<Negocio> optionalNegocio = negocioRepo.findByCodigo(cambioEstadoRegistroDTO.idNegocio());
 
         if (optionalNegocio.isEmpty()) {
             throw new Exception("El negocio no existe");
@@ -280,6 +318,7 @@ public class NegocioServicioImpl implements NegocioServicio {
         Negocio negocio = optionalNegocio.get();
 
         negocio.setEstadoRegistro(cambioEstadoRegistroDTO.estadoRegistro());
+        negocio.setEstadoNegocio(cambioEstadoRegistroDTO.estadoNegocio());
         negocioRepo.save(negocio);
     }
 

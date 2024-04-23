@@ -3,8 +3,10 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.*;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negocio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoNegocio;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.TipoNegocio;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface NegocioServicio {
 
@@ -14,9 +16,9 @@ public interface NegocioServicio {
     void actualizarNegocio(EditarNegocioDTO editarNegocioDTO) throws Exception;
     void eliminarNegocio(String idNegocio) throws Exception;
     void CambiarEstadoRegistro(CambioEstadoRegistroDTO cambioEstadoRegistroDTO) throws Exception;
-    List<DetalleNegocioDTO> listarNegociosActivos() throws Exception;
+    List<DetalleNegocioDTO> listarNegociosActivosAprobados() throws Exception;
     List<DetalleNegocioDTO> listarNegociosAprobadosModerador(String idModerador) throws Exception;
     List<DetalleNegocioDTO> listarNegociosRechazadosModerador(String idModerador) throws Exception;
     List<DetalleNegocioDTO> listarNegociosPendientes() throws Exception;
-
+    List<DetalleNegocioDTO> listarNegocioNombreOTipo(NegocioNombreTipoDistanciaDTO negocioNombreTipoDistanciaDTO) throws Exception;
 }

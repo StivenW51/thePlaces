@@ -42,9 +42,15 @@ public class ClienteController {
 
     @DeleteMapping("/eliminar/{codigo}")
     public ResponseEntity<MensajeDTO<String>> eliminarCuenta(@PathVariable String codigo) throws Exception{
-        clienteServicio.eliminarPerfil(codigo);
-        return ResponseEntity.ok().body( new MensajeDTO<>(false, "Cliente eliminado correctamente")
-        );
+        try{
+            clienteServicio.eliminarPerfil(codigo);
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(false, "Cliente eliminado correctamente"));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(true, ex.getMessage()));
+        }
     }
 
     @GetMapping("/listar")
@@ -54,10 +60,17 @@ public class ClienteController {
     }
 
     @PutMapping("/editar")
-    public ResponseEntity<MensajeDTO<String>> actualizarCliente(@Valid @RequestBody
-                                                                ActualizacionUsuarioDTO actualizacionUsuarioDTO)throws Exception{
-        clienteServicio.actualizarPerfil(actualizacionUsuarioDTO);
-        return ResponseEntity.ok().body( new MensajeDTO<>(false, "Cliente actualizado correctamente") );
+    public ResponseEntity<MensajeDTO<String>> actualizarCliente(@Valid @RequestBody ActualizacionUsuarioDTO actualizacionUsuarioDTO)throws Exception{
+
+        try{
+            clienteServicio.actualizarPerfil(actualizacionUsuarioDTO);
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(false, "Cliente actualizado correctamente"));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(true, ex.getMessage()));
+        }
     }
 
     @GetMapping(value = "/favoritos/{idCliente}")
@@ -73,7 +86,7 @@ public class ClienteController {
         }
     }
 
-    @PostMapping(value = "/agregarFavorito")
+    @PostMapping(value = "/agregarfavorito")
     public ResponseEntity<MensajeDTO<Object>> agregarFavorito(@Valid @RequestBody FavoritoDTO favoritoDTO) throws Exception {
         try{
             clienteServicio.AgregarFavorito(favoritoDTO);

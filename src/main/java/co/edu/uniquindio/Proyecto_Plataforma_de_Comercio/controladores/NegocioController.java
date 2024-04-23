@@ -26,31 +26,6 @@ public class NegocioController {
         }
     }
 
-
-    @GetMapping(value = "/obtener-cliente/{codigoCliente}")
-    public ResponseEntity<MensajeDTO<Object>> obtenerNegociosCliente(@PathVariable String codigoCliente) throws Exception{
-        try{
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(false, negocioServicio.listarNegociosCliente(codigoCliente)));
-        }
-        catch (Exception ex) {
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(true, ex.getMessage()));
-        }
-    }
-
-    @GetMapping(value = "/obtener/{codigo}")
-    public ResponseEntity<MensajeDTO<Object>> obtenerNegocioCodigo(@PathVariable String codigo) throws Exception{
-        try{
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(false, negocioServicio.obtenerNegocioCodigo(codigo)));
-        }
-        catch (Exception ex) {
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(true, ex.getMessage()));
-        }
-    }
-
     @PutMapping(value = "/editar")
     public ResponseEntity<MensajeDTO<String>> actualizarNegocio(@Valid @RequestBody EditarNegocioDTO editarNegocioDTO) throws Exception{
         try{
@@ -63,13 +38,24 @@ public class NegocioController {
         }
     }
 
-
     @DeleteMapping(value = "/eliminar/{idNegocio}")
     public ResponseEntity<MensajeDTO<Object>> eliminarNegocio(@PathVariable String idNegocio) throws Exception{
         try{
             negocioServicio.eliminarNegocio(idNegocio);
             return ResponseEntity.ok().body(
                     new MensajeDTO<>(false, "Negocio Eliminado"));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(true, ex.getMessage()));
+        }
+    }
+
+    @GetMapping(value = "/obtener/{codigo}")
+    public ResponseEntity<MensajeDTO<Object>> obtenerNegocioCodigo(@PathVariable String codigo) throws Exception{
+        try{
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(false, negocioServicio.obtenerNegocioCodigo(codigo)));
         }
         catch (Exception ex) {
             return ResponseEntity.ok().body(
@@ -125,7 +111,7 @@ public class NegocioController {
         }
     }
 
-    @PutMapping(value = "/CambiarEstadoRegistro")
+    @PutMapping(value = "/cambiar-estado-registro")
     public ResponseEntity<MensajeDTO<String>> CambiarEstadoRegistro(@Valid @RequestBody CambioEstadoRegistroDTO cambioEstadoRegistroDTO) throws Exception{
         try{
             negocioServicio.CambiarEstadoRegistro(cambioEstadoRegistroDTO);
@@ -136,4 +122,31 @@ public class NegocioController {
                     new MensajeDTO<>(true, ex.getMessage()));
         }
     }
+
+
+    @GetMapping(value = "/listar-negocios-activos-aprobados")
+    public ResponseEntity<MensajeDTO<Object>> listarNegociosActivosAprobados() throws Exception{
+        try{
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(false, negocioServicio.listarNegociosActivosAprobados()));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(true, ex.getMessage()));
+        }
+    }
+
+    @GetMapping(value = "/listar-negocios-nombre-tipo")
+    public ResponseEntity<MensajeDTO<Object>> listarNegocioNombreOTipo(@Valid @RequestBody NegocioNombreTipoDistanciaDTO negocioNombreTipoDistanciaDTO) throws Exception{
+        try{
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(false, negocioServicio.listarNegocioNombreOTipo(negocioNombreTipoDistanciaDTO)));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(true, ex.getMessage()));
+        }
+    }
+
+
 }

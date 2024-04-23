@@ -25,17 +25,13 @@ public record EditarNegocioDTO(
         List<String> telefonos,
         @NotNull
         TipoNegocio tipoNegocio,
-
         @NotNull
         EstadoNegocio estadoNegocio,
-
         @NotNull
         EstadoRegistro estadoRegistro,
-
         @NotNull
         @NotBlank @Length (max = 200)
         String descripcion,
-
         @NotNull
         List<Horario> horarios,
         @NotNull

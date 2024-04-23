@@ -75,17 +75,20 @@ public class ClienteServicioImpl implements ClienteServicio {
         Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(actualizacionUsuarioDTO.codigo());
         Cuenta cuenta = cuentaServicio.obtenerCuentaPorId(actualizacionUsuarioDTO.idCuenta());
 
+        Cliente cliente = optionalCliente.get();
+
         //Excepcion por si no encontramos el cliente
         if (optionalCliente.isEmpty()){
             throw new Exception("No se encontro el cliente a actualizar");
         }
 
         if (cuentaServicio.existeEmail(actualizacionUsuarioDTO.email())){
-            throw new Exception("El email ingresado ya se encuentra en uso");
+            if(!cuenta.getEmail().equals(actualizacionUsuarioDTO.email())){
+                throw new Exception("El email ingresado ya se encuentra en uso");
+            }
         }
 
         //si encontramos el cliente, entonces obtenemos el cliente a actualizar y le asignamos los nuevos valores.
-        Cliente cliente = optionalCliente.get();
         cliente.setNombre(actualizacionUsuarioDTO.nombre());
         cliente.setApellido(actualizacionUsuarioDTO.apellido());
         cliente.setCiudad(actualizacionUsuarioDTO.ciudadResidencia());
@@ -228,10 +231,12 @@ public class ClienteServicioImpl implements ClienteServicio {
         Cliente cliente = optionalCliente.get();
 
         List<String> favoritos = cliente.getFavoritos();
+        //List<String> favoritosBK = favoritos;
 
         for(String idNegocio : favoritos){
             if(idNegocio.equals(favoritoDTO.idNegocio())){
                 favoritos.remove(favoritoDTO.idNegocio());
+                break;
             }
         }
 

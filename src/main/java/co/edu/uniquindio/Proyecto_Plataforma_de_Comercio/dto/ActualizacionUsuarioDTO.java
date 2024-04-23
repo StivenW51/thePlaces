@@ -35,7 +35,7 @@ public record ActualizacionUsuarioDTO(
         @Length(max = 50)
         String ciudadResidencia,
 
-        @NotBlank
+        @NotNull
         List<String>telefono,
 
         @NotBlank

@@ -31,7 +31,8 @@ public record DetalleNegocioDTO(
         List<String> imagenes,
 
 
-        @NotBlank String telefonos,
+        @NotNull
+        List<String> telefonos,
 
         @NotBlank @Length (max = 200)
         String descripcion
