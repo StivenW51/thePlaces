@@ -26,7 +26,7 @@ public class ImagenesServicioImpl implements ImagenesServicio {
     @Override
     public Map subirImagen(MultipartFile imagen) throws Exception {
         File file = convertir(imagen);
-        return cloudinary.uploader().upload(file, ObjectUtils.asMap("folder", "unilocal"));
+        return cloudinary.uploader().upload(file, ObjectUtils.asMap("folder", "the_places"));
     }
 
     @Override
@@ -39,5 +39,11 @@ public class ImagenesServicioImpl implements ImagenesServicio {
         fos.write(imagen.getBytes());
         fos.close();
         return file;
+    }
+
+
+    @Override
+    public Map subirImagenII(File file) throws Exception {
+        return cloudinary.uploader().upload(file, ObjectUtils.asMap("folder", "the_places"));
     }
 }

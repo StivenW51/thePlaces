@@ -35,6 +35,8 @@ public record DetalleNegocioDTO(
         List<String> telefonos,
 
         @NotBlank @Length (max = 200)
-        String descripcion
+        String descripcion,
+
+        String idPropietario
 ) {
 }

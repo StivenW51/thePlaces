@@ -1,0 +1,40 @@
+
+`	java:S112,"FDefine and throw a dedicated exception instead of using a generic one.(Ş¢ëÆøÿÿÿÿ
+[	java:S112R"FDefine and throw a dedicated exception instead of using a generic one.(õáĞ 
+[	java:S112W"FDefine and throw a dedicated exception instead of using a generic one.(Ëï™ÿ
+`	java:S112t"FDefine and throw a dedicated exception instead of using a generic one.(›“øÎûÿÿÿÿ
+a	java:S112‚"FDefine and throw a dedicated exception instead of using a generic one.(œ‘ûÿÿÿÿ
+a	java:S112‰"FDefine and throw a dedicated exception instead of using a generic one.(¿ß•äşÿÿÿÿ
+a	java:S112 "FDefine and throw a dedicated exception instead of using a generic one.(ùƒÁ¢ÿÿÿÿÿ
+a	java:S112Ú"FDefine and throw a dedicated exception instead of using a generic one.(Õ¹öøÿÿÿÿ
+J
+java:S1066V"/Merge this if statement with the enclosing one.(İ±Ôûÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(×¬Ô—
+z
+java:S3655Ç"^Call "optionalCliente.isPresent()" or "!optionalCliente.isEmpty()" before accessing the value.(†®•óúÿÿÿÿ
+z
+java:S3655Ô"^Call "optionalCliente.isPresent()" or "!optionalCliente.isEmpty()" before accessing the value.(†®•óúÿÿÿÿ
+z
+java:S3655ç"^Call "optionalCliente.isPresent()" or "!optionalCliente.isEmpty()" before accessing the value.(†®•óúÿÿÿÿ
+y
+java:S3655N"^Call "optionalCliente.isPresent()" or "!optionalCliente.isEmpty()" before accessing the value.(†®•óúÿÿÿÿ
+_
+java:S2583Q"DChange this condition so that it does not always evaluate to "false"(·Àüßùÿÿÿÿ
+˜
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ªµÁÏ
+˜
+java:S1186•"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Á½ªº
+U
+java:S1854(":Remove this useless assignment to local variable "cuenta".(åÔ‘öøÿÿÿÿ
+Q	java:S125J"<This block of commented-out lines of code should be removed.(á Ï†
+?	java:S108…")Either remove or fill this block of code.(Î’Å
+H
+java:S1481º",Remove this unused "cliente" local variable.(·öÈıÿÿÿÿ
+R	java:S125»"<This block of commented-out lines of code should be removed.(·ƒ›
+C
+java:S1481Å",Remove this unused "negocio" local variable.(û¹æÔ
+W	java:S125ê"<This block of commented-out lines of code should be removed.(ˆ‡‘‡şÿÿÿÿ
+€
+java:S1128"jRemove this unused import 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegistro'.(†Ë“æ
+‰
+java:S1128"sRemove this unused import 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.NegocioServicio'.(ûéÛ…

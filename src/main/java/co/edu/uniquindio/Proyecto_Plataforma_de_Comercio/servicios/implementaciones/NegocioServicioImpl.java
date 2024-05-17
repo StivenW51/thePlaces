@@ -10,9 +10,12 @@ import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.Ne
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class NegocioServicioImpl implements NegocioServicio {
 
     private final NegocioRepo negocioRepo;
+    private final ImagenesServicioImpl imagenesServicio;
 
     /**
      * Obtiene los datos de un negocio dado su codigo
@@ -44,7 +48,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getTipoNegocio(),
                     negocio.getImagenes(),
                     negocio.getTelefonos(),
-                    negocio.getDescripcion()
+                    negocio.getDescripcion(),
+                    negocio.getCodigoCliente()
             );
         }
         else {
@@ -62,12 +67,13 @@ public class NegocioServicioImpl implements NegocioServicio {
     public String crearNegocio(CrearNegocioDTO crearNegocioDTO) throws Exception {
         //instanciamos el negocio
         Negocio negocio = new Negocio();
+        List<String> ImagenesUrl = new ArrayList<>();
+        String urlCloudinary;
 
         negocio.setNombre(crearNegocioDTO.nombre());
         negocio.setTipoNegocio(crearNegocioDTO.tipoNegocio());
         negocio.setDescripcion(crearNegocioDTO.descripcion());
         negocio.setDireccion(crearNegocioDTO.direccion());
-        negocio.setImagenes(crearNegocioDTO.imagenes());
         negocio.setUbicacion(crearNegocioDTO.ubicacion());
         negocio.setHorarios(crearNegocioDTO.horarios());
         negocio.setEstadoRegistro(crearNegocioDTO.estadoRegistro());
@@ -75,6 +81,16 @@ public class NegocioServicioImpl implements NegocioServicio {
         negocio.setTelefonos(crearNegocioDTO.telefonos());
         negocio.setCodigoCliente(crearNegocioDTO.codigoCliente());
 
+        for(String url_Local : crearNegocioDTO.imagenes()){
+
+            File uploadedFile = new File(url_Local);
+            Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
+
+            urlCloudinary = cloudinaryResponse.get("url").toString();
+            ImagenesUrl.add(urlCloudinary);
+        }
+
+        negocio.setImagenes(ImagenesUrl);
         Negocio negocioGuardado = negocioRepo.save(negocio);
 
         return negocioGuardado.getCodigo();
@@ -168,7 +184,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getTipoNegocio(),
                     negocio.getImagenes(),
                     negocio.getTelefonos(),
-                    negocio.getDescripcion()
+                    negocio.getDescripcion(),
+                    negocio.getCodigoCliente()
             ));
         }
 
@@ -204,7 +221,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getTipoNegocio(),
                     negocio.getImagenes(),
                     negocio.getTelefonos(),
-                    negocio.getDescripcion()
+                    negocio.getDescripcion(),
+                    negocio.getCodigoCliente()
             ));
         }
 
@@ -241,7 +259,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                         negocio.getTipoNegocio(),
                         negocio.getImagenes(),
                         negocio.getTelefonos(),
-                        negocio.getDescripcion()
+                        negocio.getDescripcion(),
+                        negocio.getCodigoCliente()
                 ));
             }
         }
@@ -283,7 +302,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getTipoNegocio(),
                     negocio.getImagenes(),
                     negocio.getTelefonos(),
-                    negocio.getDescripcion()
+                    negocio.getDescripcion(),
+                    negocio.getCodigoCliente()
             ));
         }
 

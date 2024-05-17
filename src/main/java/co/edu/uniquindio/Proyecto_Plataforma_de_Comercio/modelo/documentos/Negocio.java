@@ -33,6 +33,6 @@ public class Negocio implements Serializable {
     private EstadoRegistro estadoRegistro;
     private EstadoNegocio estadoNegocio;
     private List<String> telefonos;
-    private String codigoCliente;
+    private String codigoCliente; // Codigo del cliente propietario
     private String idModerador;
 }

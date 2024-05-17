@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class CuentaServicioImpl implements CuentaServicio {
 
     private final CuentaRepo cuentaRepo;
+    private final ImagenesServicioImpl imagenesServicio;
 
     @Override
     public void crearCuenta(RegistroCuentaDTO registroCuentaDTO) throws Exception {
@@ -39,8 +42,13 @@ public class CuentaServicioImpl implements CuentaServicio {
 
         cuenta.setNickname(registroCuentaDTO.nickname());
         cuenta.setEmail(registroCuentaDTO.email());
-        cuenta.setFotoPerfil(registroCuentaDTO.fotoPerfil());
+        //
         cuenta.setEstadoCliente(EstadoCliente.ACTIVO);
+
+        File uploadedFile = new File(registroCuentaDTO.fotoPerfil());
+        Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
+        String urlCloudinary = cloudinaryResponse.get("url").toString();
+        cuenta.setFotoPerfil(urlCloudinary);
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String passwordEncriptada = passwordEncoder.encode(registroCuentaDTO.password());

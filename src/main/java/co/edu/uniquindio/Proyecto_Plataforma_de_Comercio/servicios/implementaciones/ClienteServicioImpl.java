@@ -9,13 +9,13 @@ import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.ClienteRep
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.CuentaRepo;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ClienteServicio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.NegocioServicio;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.utils.JWTUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -26,6 +26,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     private final CuentaRepo cuentaRepo;
     private final CuentaServicioImpl cuentaServicio;
     private final NegocioServicioImpl negocioServicio;
+
 
     private boolean existeCedula(String cedula){
         return clienteRepo.findByCedula(cedula).isPresent();
@@ -166,11 +167,12 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         //Retornamos el cliente en formato DTO
         return new DetalleClienteDTO(cliente.getCodigo(),
-                cliente.getNombre(),
+                cliente.getNombre() + " " + cliente.getApellido(),
                 cuenta.getFotoPerfil(),
                 cuenta.getNickname(),
                 cuenta.getEmail(),
-                cliente.getCiudad());
+                cliente.getCiudad(),
+                cliente.getIdCuenta());
     }
 
     @Override
@@ -243,4 +245,6 @@ public class ClienteServicioImpl implements ClienteServicio {
         cliente.setFavoritos(favoritos);
         clienteRepo.save(cliente);
     }
+
+
 }

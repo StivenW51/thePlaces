@@ -1,11 +1,14 @@
 package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.implementaciones;
 
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.*;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negocio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.RegistroModerador;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Cuenta;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoNegocio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegistro;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.RegistroModeradorRepo;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.CuentaServicio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ModeradorServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +26,9 @@ public class ModeradorServicioImpl implements ModeradorServicio {
 
     private final RegistroModeradorRepo registroModeradorRepo;
     private final NegocioServicioImpl negocioServicio;
-
+    private final EmailServicioImpl emailServicio;
+    private final ClienteServicioImpl clienteServicio;
+    private final CuentaServicioImpl cuentaServicio;
     @Override
     public void revisarNegocio(DetalleRegistroModeradorDTO detalleRegistroModeradorDTO) throws Exception {
         RegistroModerador registroModerador = new RegistroModerador();
@@ -50,6 +55,7 @@ public class ModeradorServicioImpl implements ModeradorServicio {
 
         registroModeradorRepo.save(registroModerador);
         negocioServicio.CambiarEstadoRegistro(cambioEstadoRegistroDTO);
+        enviarCorreoModerador(detalleRegistroModeradorDTO);
     }
 
     @Override
@@ -88,4 +94,21 @@ public class ModeradorServicioImpl implements ModeradorServicio {
         return listaDetalleRegistros;
     }
 
+
+    private void enviarCorreoModerador(DetalleRegistroModeradorDTO detalleRegistroModeradorDTO) throws Exception {
+        String mensaje = "";
+        DetalleNegocioDTO negocio = negocioServicio.obtenerNegocioCodigo(detalleRegistroModeradorDTO.idNegocio());
+        DetalleClienteDTO cliente = clienteServicio.obtenerCliente(negocio.idPropietario());
+        Cuenta cuenta = cuentaServicio.obtenerCuentaPorId(cliente.idCuenta());
+
+        mensaje += "Estimado " + cliente.nombre();
+        mensaje += "<br> <br> Su negocio ha sido " + detalleRegistroModeradorDTO.estadoRegistro().toString();
+        mensaje += "<br> y los detalles se encuentran a continuación";
+        mensaje += "<br> <br> Observaciones: ";
+        mensaje += detalleRegistroModeradorDTO.observacion();
+        mensaje += "<br> <br> muchas gracias <br> Equipo <strong>The Places</strong>";
+
+        emailServicio.enviarCorreo(new EmailDTO("Su negocio ha sido "+ detalleRegistroModeradorDTO.estadoRegistro().toString()
+                ,mensaje, cuenta.getEmail()));
+    }
 }

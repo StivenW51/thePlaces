@@ -2,9 +2,12 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.controladores;
 
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.*;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ClienteServicio;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.utils.FiltroToken;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.ServletRequestParameterPropertyValues;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,7 +63,7 @@ public class ClienteController {
     }
 
     @PutMapping("/editar")
-    public ResponseEntity<MensajeDTO<String>> actualizarCliente(@Valid @RequestBody ActualizacionUsuarioDTO actualizacionUsuarioDTO)throws Exception{
+    public ResponseEntity<MensajeDTO<String>> actualizarCliente(@Valid @RequestBody ActualizacionUsuarioDTO actualizacionUsuarioDTO) throws Exception{
 
         try{
             clienteServicio.actualizarPerfil(actualizacionUsuarioDTO);
@@ -73,12 +76,14 @@ public class ClienteController {
         }
     }
 
+
+
     @GetMapping(value = "/favoritos/{idCliente}")
     public ResponseEntity<MensajeDTO<Object>> listarFavoritos(@PathVariable String idCliente) throws Exception {
-        try{
 
+        try{
             return ResponseEntity.ok().body(
-                    new MensajeDTO<>(false, clienteServicio.listarFavoritos(idCliente)));
+                new MensajeDTO<>(false, clienteServicio.listarFavoritos(idCliente)));
         }
         catch (Exception ex) {
             return ResponseEntity.ok().body(

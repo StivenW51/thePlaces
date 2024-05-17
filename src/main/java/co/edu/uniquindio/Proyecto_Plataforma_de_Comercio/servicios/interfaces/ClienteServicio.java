@@ -18,4 +18,6 @@ public interface ClienteServicio {
     List<DetalleNegocioDTO> listarFavoritos(String idCliente) throws Exception;
     void AgregarFavorito(FavoritoDTO favoritoDTO) throws Exception;
     void QuitarFavorito(FavoritoDTO favoritoDTO) throws Exception;
+
+
 }
