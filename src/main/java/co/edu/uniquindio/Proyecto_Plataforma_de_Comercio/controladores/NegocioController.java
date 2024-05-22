@@ -100,17 +100,7 @@ public class NegocioController {
     }
 
 
-    @GetMapping(value = "/listar-negocios-activos-aprobados")
-    public ResponseEntity<MensajeDTO<Object>> listarNegociosActivosAprobados() throws Exception{
-        try{
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(false, negocioServicio.listarNegociosActivosAprobados()));
-        }
-        catch (Exception ex) {
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(true, ex.getMessage()));
-        }
-    }
+
 
     @GetMapping(value = "/listar-negocios-nombre-tipo")
     public ResponseEntity<MensajeDTO<Object>> listarNegocioNombreOTipo(@Valid @RequestBody NegocioNombreTipoDistanciaDTO negocioNombreTipoDistanciaDTO) throws Exception{

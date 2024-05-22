@@ -30,9 +30,10 @@ public class AutenticacionServicioImpl implements AutenticacionServicio {
     private final JWTUtils jwtUtils;
     private final EmailServicioImpl emailServicio;
 
-    @Override
-    public TokenDTO iniciarSesionCliente(InicioSesionDTO loginDTO) throws Exception {
+
+    public TokenDTO IniciarSesion(InicioSesionDTO loginDTO) throws Exception{
         Optional<Cuenta> cuentaOptional = cuentaRepo.findByEmail(loginDTO.email());
+        Map<String, Object> map = new HashMap<>();
 
         if(cuentaOptional.isEmpty()){
             throw new Exception("Cuenta no existe");
@@ -40,52 +41,32 @@ public class AutenticacionServicioImpl implements AutenticacionServicio {
 
         Cuenta cuenta = cuentaOptional.get();
         Optional<Cliente> clienteOptional = clienteRepo.findByIdCuenta(cuenta.getId());
+        Optional<Moderador> moderadorOptional = moderadorRepo.findByIdCuenta(cuenta.getId());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if( !passwordEncoder.matches(loginDTO.password(), cuenta.getPassword()) ) {
+            throw new Exception("La contraseña es incorrecta");
+        }
 
         if(clienteOptional.isEmpty()){
-            throw new Exception("El correo no se encuentra registrado");
+            if(moderadorOptional.isEmpty()){
+                throw new Exception("El correo no se encuentra registrado");
+            }
+            else{
+                Moderador moderador = moderadorOptional.get();
+
+                map.put("rol", "MODERADOR");
+                map.put("nombre", moderador.getNombre());
+                map.put("id", moderador.getCodigo());
+            }
         }
+        else {
+            Cliente cliente = clienteOptional.get();
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        Cliente cliente = clienteOptional.get();
-
-        if( !passwordEncoder.matches(loginDTO.password(), cuenta.getPassword()) ) {
-            throw new Exception("La contraseña es incorrecta");
+            map.put("rol", "CLIENTE");
+            map.put("nombre", cliente.getNombre());
+            map.put("id", cliente.getCodigo());
         }
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("rol", "CLIENTE");
-        map.put("nombre", cliente.getNombre());
-        map.put("id", cliente.getCodigo());
-
-        return new TokenDTO(jwtUtils.generarToken(cuenta.getEmail(), map) );
-    }
-
-    @Override
-    public TokenDTO iniciarSesionModerador(InicioSesionDTO loginDTO) throws Exception {
-        Optional<Cuenta> cuentaOptional = cuentaRepo.findByEmail(loginDTO.email());
-
-        if(cuentaOptional.isEmpty()){
-            throw new Exception("Cuenta no existe");
-        }
-
-        Cuenta cuenta = cuentaOptional.get();
-        Optional<Moderador> moderadorOptional = moderadorRepo.findByIdCuenta(cuenta.getId());
-
-        if(moderadorOptional.isEmpty()){
-            throw new Exception("El correo no se encuentra registrado");
-        }
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        Moderador moderador = moderadorOptional.get();
-
-        if( !passwordEncoder.matches(loginDTO.password(), cuenta.getPassword()) ) {
-            throw new Exception("La contraseña es incorrecta");
-        }
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("rol", "MODERADOR");
-        map.put("nombre", moderador.getNombre());
-        map.put("id", moderador.getCodigo());
 
         return new TokenDTO(jwtUtils.generarToken(cuenta.getEmail(), map) );
     }

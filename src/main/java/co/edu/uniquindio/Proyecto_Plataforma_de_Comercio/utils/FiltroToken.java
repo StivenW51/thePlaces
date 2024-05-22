@@ -79,7 +79,6 @@ public class FiltroToken extends OncePerRequestFilter {
                     error = false;
                 }
 
-
                 if (requestURI.startsWith("/api/public")) {
                     error = false;
                 }

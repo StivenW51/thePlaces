@@ -28,45 +28,8 @@ public class ClienteServicioImpl implements ClienteServicio {
     private final NegocioServicioImpl negocioServicio;
 
 
-    private boolean existeCedula(String cedula){
+    public boolean existeCedula(String cedula){
         return clienteRepo.findByCedula(cedula).isPresent();
-    }
-
-
-    @Override
-    public String registroCliente(RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
-
-        //creamos el objeto cliente
-        Cliente cliente = new Cliente();
-        Cuenta cuenta = new Cuenta();
-
-        //verificamos que la cedula sea unica
-        if(existeCedula(registroUsuarioDTO.cedula())){
-            throw new Exception("La Cedula ya se encuentra registrada");
-        }
-
-        RegistroCuentaDTO registroCuentaDTO = new RegistroCuentaDTO(registroUsuarioDTO.email(),
-                                                                    registroUsuarioDTO.nickname(),
-                                                                    registroUsuarioDTO.password(),
-                                                                    registroUsuarioDTO.fotoPerfil(),
-                                                        true ) ;
-        cuentaServicio.crearCuenta(registroCuentaDTO);
-        cuenta = cuentaServicio.obtenerCuentaPorEmail(registroCuentaDTO.email());
-
-        //asignamos los campos de cada atributo
-        cliente.setCedula(registroUsuarioDTO.cedula());
-        cliente.setNombre(registroUsuarioDTO.nombre());
-        cliente.setApellido(registroUsuarioDTO.apellido());
-        cliente.setCiudad(registroUsuarioDTO.ciudadResidencia());
-        cliente.setTelefono(registroUsuarioDTO.telefono());
-
-        cliente.setIdCuenta(cuenta.getId());
-
-        //Guardamos en la base de datos y obtenemos el objeto registrado
-        Cliente clienteGuardado = clienteRepo.save(cliente);
-
-        //retornamos el id (codigo) del cliente registrado
-        return clienteGuardado.getCodigo();
     }
 
     @Override

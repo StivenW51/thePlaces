@@ -19,25 +19,25 @@ public class ClienteServicioTest {
     @Autowired
     private ClienteServicio clienteServicio;
 
-    @Test
-    public void registroClienteTest() throws Exception{
-        RegistroUsuarioDTO registroUsuarioDTO = new RegistroUsuarioDTO(
-                "1094932425",
-                "Stiven",
-                "Restrepo",
-                "stivenw51",
-                "stivenavs56@gmail.com",
-                "Armenia",
-                "jsr.1956",
-                "xxx",
-                new ArrayList<String>(Arrays.asList("3148327271","301762000")));
-
-        //Se registra el cliente
-        String codigo = clienteServicio.registroCliente(registroUsuarioDTO);
-
-        //se verifica que el codigo no sea nulo, es decir, que se haya registrado correctamente el cliente
-        Assertions.assertNotNull(codigo);
-    }
+//    @Test
+//    public void registroClienteTest() throws Exception{
+//        RegistroUsuarioDTO registroUsuarioDTO = new RegistroUsuarioDTO(
+//                "1094932425",
+//                "Stiven",
+//                "Restrepo",
+//                "stivenw51",
+//                "stivenavs56@gmail.com",
+//                "Armenia",
+//                "jsr.1956",
+//                "xxx",
+//                new ArrayList<String>(Arrays.asList("3148327271","301762000")));
+//
+//        //Se registra el cliente
+//        String codigo = clienteServicio.registroCliente(registroUsuarioDTO);
+//
+//        //se verifica que el codigo no sea nulo, es decir, que se haya registrado correctamente el cliente
+//        Assertions.assertNotNull(codigo);
+//    }
 
     @Test
     public void actualizarClienteTest() throws Exception{

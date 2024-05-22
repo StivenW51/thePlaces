@@ -41,6 +41,7 @@ public class NegocioServicioImpl implements NegocioServicio {
             negocio = optionalNegocio.get();
 
             return new DetalleNegocioDTO(
+                    negocio.getCodigo(),
                     negocio.getNombre(),
                     negocio.getDireccion(),
                     negocio.getHorarios(),
@@ -49,12 +50,18 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getImagenes(),
                     negocio.getTelefonos(),
                     negocio.getDescripcion(),
-                    negocio.getCodigoCliente()
+                    negocio.getCodigoCliente(),
+                    Calificacion(negocio.getCodigo())
+
             );
         }
         else {
             throw new Exception("El codigo del negocio " + codigo + " no se encuentra");
         }
+    }
+
+    public int Calificacion(String idNegocio){
+        return 5;
     }
 
     /**
@@ -177,6 +184,7 @@ public class NegocioServicioImpl implements NegocioServicio {
            negocio = listaNegocios.get(i);
 
             listaDetalleNegocio.add(new DetalleNegocioDTO(
+                    negocio.getCodigo(),
                     negocio.getNombre(),
                     negocio.getDireccion(),
                     negocio.getHorarios(),
@@ -185,7 +193,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getImagenes(),
                     negocio.getTelefonos(),
                     negocio.getDescripcion(),
-                    negocio.getCodigoCliente()
+                    negocio.getCodigoCliente(),
+                    Calificacion(negocio.getCodigo())
             ));
         }
 
@@ -197,37 +206,6 @@ public class NegocioServicioImpl implements NegocioServicio {
      * @return
      * @throws Exception
      */
-    @Override
-    public List<DetalleNegocioDTO> listarNegociosActivosAprobados() throws Exception {
-        List<Negocio> listaNegocios = new ArrayList<>();
-        Optional<List<Negocio>> optionalNegocios = negocioRepo.findByEstadoNegocioAndEstadoRegistro(EstadoNegocio.ACTIVO, EstadoRegistro.APROBADO);
-        List<DetalleNegocioDTO> listaDetalleNegocio = new ArrayList<>();
-        Negocio negocio;
-
-        if(optionalNegocios.isEmpty()){
-            throw new Exception("No hay negocios");
-        }
-
-        listaNegocios = optionalNegocios.get();
-
-        for(int i = 0; i < listaNegocios.size(); i++){
-            negocio = listaNegocios.get(i);
-
-            listaDetalleNegocio.add(new DetalleNegocioDTO(
-                    negocio.getNombre(),
-                    negocio.getDireccion(),
-                    negocio.getHorarios(),
-                    negocio.getUbicacion(),
-                    negocio.getTipoNegocio(),
-                    negocio.getImagenes(),
-                    negocio.getTelefonos(),
-                    negocio.getDescripcion(),
-                    negocio.getCodigoCliente()
-            ));
-        }
-
-        return listaDetalleNegocio;
-    }
 
 
     /**
@@ -252,6 +230,7 @@ public class NegocioServicioImpl implements NegocioServicio {
                 negocio = listaNegocios.get(i);
 
                 listaDetalleNegocio.add(new DetalleNegocioDTO(
+                        negocio.getCodigo(),
                         negocio.getNombre(),
                         negocio.getDireccion(),
                         negocio.getHorarios(),
@@ -260,7 +239,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                         negocio.getImagenes(),
                         negocio.getTelefonos(),
                         negocio.getDescripcion(),
-                        negocio.getCodigoCliente()
+                        negocio.getCodigoCliente(),
+                        Calificacion(negocio.getCodigo())
                 ));
             }
         }
@@ -295,6 +275,7 @@ public class NegocioServicioImpl implements NegocioServicio {
             negocio = listaNegocios.get(i);
 
             listaDetalleNegocio.add(new DetalleNegocioDTO(
+                    negocio.getCodigo(),
                     negocio.getNombre(),
                     negocio.getDireccion(),
                     negocio.getHorarios(),
@@ -303,7 +284,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getImagenes(),
                     negocio.getTelefonos(),
                     negocio.getDescripcion(),
-                    negocio.getCodigoCliente()
+                    negocio.getCodigoCliente(),
+                    Calificacion(negocio.getCodigo())
             ));
         }
 

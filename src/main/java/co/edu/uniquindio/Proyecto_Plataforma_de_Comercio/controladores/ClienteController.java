@@ -19,19 +19,6 @@ public class ClienteController {
 
     private final ClienteServicio clienteServicio;
 
-    @PostMapping(value = "/registrar")
-    public ResponseEntity<MensajeDTO<String>> registrarCliente(@Valid @RequestBody RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
-       try{
-           clienteServicio.registroCliente(registroUsuarioDTO);
-           return ResponseEntity.ok().body(
-                   new MensajeDTO<>(false, "Cliente registrado correctamente"));
-       }
-       catch (Exception ex) {
-           return ResponseEntity.ok().body(
-                   new MensajeDTO<>(true, ex.getMessage()));
-       }
-    }
-
     @GetMapping("/obtener/{codigo}")
     public ResponseEntity<MensajeDTO<Object>> obtenerCliente(@PathVariable String codigo) throws Exception {
 
@@ -75,8 +62,6 @@ public class ClienteController {
                     new MensajeDTO<>(true, ex.getMessage()));
         }
     }
-
-
 
     @GetMapping(value = "/favoritos/{idCliente}")
     public ResponseEntity<MensajeDTO<Object>> listarFavoritos(@PathVariable String idCliente) throws Exception {

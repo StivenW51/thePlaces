@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ClienteServicio {
 
-    String registroCliente(RegistroUsuarioDTO registroUsuarioDTO) throws Exception;
+
     void actualizarPerfil(ActualizacionUsuarioDTO actualizacionUsuarioDTO)throws Exception;
     void eliminarPerfil(String idCliente)throws Exception;
     void iniciarSesion(InicioSesionDTO inicioSesionDTO)throws Exception;

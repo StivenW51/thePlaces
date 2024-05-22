@@ -11,6 +11,9 @@ import java.util.List;
 
 public record DetalleNegocioDTO(
 
+        @NotBlank
+        String id,
+
         @NotBlank @Length(max = 100)
         String nombreNegocio,
 
@@ -37,6 +40,8 @@ public record DetalleNegocioDTO(
         @NotBlank @Length (max = 200)
         String descripcion,
 
-        String idPropietario
+        String idPropietario,
+
+        Integer calificación
 ) {
 }
