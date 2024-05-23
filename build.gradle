@@ -37,12 +37,13 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
 }
-/*
+
 bootJar {
     archiveFileName = 'the-places.jar' // Puedes cambiar el nombre del archivo JAR
-    mainClassName = 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication' // Asegúrate de que esta clase exista y tenga el método main
-}*/
-
+    mainClass.set('co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication')
+    //mainClassName = 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication' // Asegúrate de que esta clase exista y tenga el método main
+}
+/*
 springBoot {
     mainClass.set('co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication')
 }
@@ -51,7 +52,7 @@ bootJar {
     archiveFileName = 'the-places.jar'
 }
 
-/*
+
 test {
     useJUnitPlatform()
 }

@@ -1,26 +1,23 @@
-# Etapa de construcción
-FROM gradle:7.3.0-jdk11 AS build
+# Use an OpenJDK base image
+FROM openjdk:17
+
+# Set the working directory in the container
 WORKDIR /app
 
-# Copiar los archivos de configuración de Gradle primero
-COPY build.gradle settings.gradle gradlew ./
+# Copy the Gradle build files
+COPY build.gradle .
+COPY settings.gradle .
+COPY gradlew .
 COPY gradle/ ./gradle/
 
-# Copiar el código fuente de la aplicación
+# Copy the application source code
 COPY src/ ./src/
 
-# Construir la aplicación usando Gradle
-RUN ./gradlew bootJar
+# Build the application using Gradle
+RUN ./gradlew build
 
-# Etapa de ejecución
-FROM openjdk:11-jre-slim
-WORKDIR /app
-
-# Copiar el archivo JAR desde la etapa de construcción
-COPY --from=build /app/build/libs/*.jar app.jar
-
-# Exponer el puerto en el que se ejecutará la aplicación
+# Set the port to expose
 EXPOSE ${PORT}
 
-# Comando para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Set the entry point to run the application
+ENTRYPOINT ["java", "-jar", "build/libs/the-places.jar"]
