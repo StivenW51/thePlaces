@@ -10,6 +10,9 @@ COPY settings.gradle .
 COPY gradlew .
 COPY gradle/ ./gradle/
 
+# Asegurar que el archivo gradlew tenga permisos de ejecución
+RUN chmod +x gradlew
+
 # Copy the application source code
 COPY src/ ./src/
 
