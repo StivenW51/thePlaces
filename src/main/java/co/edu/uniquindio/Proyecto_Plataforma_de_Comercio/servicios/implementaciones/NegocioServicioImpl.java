@@ -89,9 +89,9 @@ public class NegocioServicioImpl implements NegocioServicio {
         negocio.setTelefonos(crearNegocioDTO.telefonos());
         negocio.setCodigoCliente(crearNegocioDTO.codigoCliente());
 
-        for(String url_Local : crearNegocioDTO.imagenes()){
+        for(File url_Imagen : crearNegocioDTO.imagenes()){
 
-            File uploadedFile = new File(url_Local);
+            File uploadedFile = url_Imagen;
             Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
 
             urlCloudinary = cloudinaryResponse.get("url").toString();

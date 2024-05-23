@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.io.File;
+
 public record ComentarioDTO(
         @NotBlank @NotNull
         String codigoNegocio,
@@ -15,6 +17,6 @@ public record ComentarioDTO(
         @NotNull @Max(5) @Min(1)
         int calificacion,
         //private CodigoDescuento bono,
-        String urlFotoComentario
+        File urlFotoComentario
 ) {
 }

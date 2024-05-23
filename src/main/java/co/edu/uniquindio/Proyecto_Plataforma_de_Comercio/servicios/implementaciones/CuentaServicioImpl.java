@@ -45,7 +45,7 @@ public class CuentaServicioImpl implements CuentaServicio {
         //
         cuenta.setEstadoCliente(EstadoCliente.ACTIVO);
 
-        File uploadedFile = new File(registroCuentaDTO.fotoPerfil());
+        File uploadedFile = registroCuentaDTO.fotoPerfil();
         Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
         String urlCloudinary = cloudinaryResponse.get("url").toString();
         cuenta.setFotoPerfil(urlCloudinary);

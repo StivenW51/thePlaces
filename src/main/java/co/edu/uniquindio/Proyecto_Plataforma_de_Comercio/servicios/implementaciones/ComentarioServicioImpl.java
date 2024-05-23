@@ -32,10 +32,10 @@ public class ComentarioServicioImpl implements ComentarioServicio {
                 .mensaje(comentarioDTO.mensaje())
                 .calificacion(comentarioDTO.calificacion())
                 .fecha(LocalDateTime.now())
-                .urlFotoComentario(comentarioDTO.urlFotoComentario())
+                .urlFotoComentario("")
                 .build();
 
-        File uploadedFile = new File(comentarioDTO.urlFotoComentario());
+        File uploadedFile = comentarioDTO.urlFotoComentario();
         Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
         String urlCloudinary = cloudinaryResponse.get("url").toString();
         comentario.setUrlFotoComentario(urlCloudinary);

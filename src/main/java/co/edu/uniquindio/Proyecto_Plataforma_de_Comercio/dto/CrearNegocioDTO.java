@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
+import java.io.File;
 import java.util.List;
 
 public record CrearNegocioDTO(
@@ -25,7 +26,7 @@ public record CrearNegocioDTO(
         String direccion,
 
         @NotNull
-        List<String> imagenes,
+        List<File> imagenes,
 
         @NotNull
         Ubicacion ubicacion,
