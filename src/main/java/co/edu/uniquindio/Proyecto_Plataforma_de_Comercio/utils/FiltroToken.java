@@ -79,6 +79,28 @@ public class FiltroToken extends OncePerRequestFilter {
                     error = false;
                 }
 
+                //Si la petición es para la ruta /api/clientes se verifica que el token sea correcto y que el rol sea CLIENTE
+                if (requestURI.startsWith("/api/negocio") == true) {
+                    if (token != null) {
+                        Jws<Claims> jws = jwtUtils.parseJwt(token);
+                        if (!jws.getPayload().get("rol").equals("CLIENTE") && !jws.getPayload().get("rol").equals("MODERADOR")) {
+                            crearRespuestaError("No tiene permisos para acceder a este recurso",
+                                    HttpServletResponse.SC_FORBIDDEN, response);
+                        }
+                        else {
+                            error = false;
+                        }
+                    }
+                    else {
+                        crearRespuestaError("No tiene permisos para acceder a este recurso", HttpServletResponse.SC_FORBIDDEN, response);
+                    }
+                }
+                else {
+                    error = false;
+                }
+
+
+
                 if (requestURI.startsWith("/api/public")) {
                     error = false;
                 }

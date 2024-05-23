@@ -2,10 +2,13 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.implementaci
 
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.*;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Comentario;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Negocio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Cuenta;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Respuesta;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegistro;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.ClienteRepo;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.ComentarioRepo;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.CuentaRepo;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ClienteServicio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.NegocioServicio;
@@ -15,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -24,6 +28,8 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     private final ClienteRepo clienteRepo;
     private final CuentaRepo cuentaRepo;
+    private  final ComentarioRepo comentarioRepo;
+
     private final CuentaServicioImpl cuentaServicio;
     private final NegocioServicioImpl negocioServicio;
 
@@ -208,6 +214,8 @@ public class ClienteServicioImpl implements ClienteServicio {
         cliente.setFavoritos(favoritos);
         clienteRepo.save(cliente);
     }
+
+
 
 
 }

@@ -15,32 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class AutenticacionController {
 
     private final AutenticacionServicio autenticacionServicio;
-//    @PostMapping("/login-cliente")
-//    public ResponseEntity<MensajeDTO<Object>> iniciarSesionCliente(@Valid @RequestBody InicioSesionDTO loginDTO) throws Exception {
-//
-//        try{
-//            TokenDTO tokenDTO = autenticacionServicio.iniciarSesionCliente(loginDTO);
-//            return ResponseEntity.ok().body(new MensajeDTO<>(false, tokenDTO));
-//        }
-//        catch (Exception ex) {
-//            return ResponseEntity.ok().body(
-//                    new MensajeDTO<>(true, ex.getMessage()));
-//        }
-//    }
-//
-//    @PostMapping("/login-moderador")
-//    public ResponseEntity<MensajeDTO<Object>> iniciarSesionModerador(@Valid @RequestBody InicioSesionDTO loginDTO) throws Exception {
-//
-//        try{
-//            TokenDTO tokenDTO = autenticacionServicio.iniciarSesionModerador(loginDTO);
-//            return ResponseEntity.ok().body(new MensajeDTO<>(false, tokenDTO));
-//        }
-//        catch (Exception ex) {
-//            return ResponseEntity.ok().body(
-//                    new MensajeDTO<>(true, ex.getMessage()));
-//        }
-//    }
-
 
     @PostMapping("/login")
     public ResponseEntity<MensajeDTO<Object>> login(@Valid @RequestBody InicioSesionDTO loginDTO) throws Exception {

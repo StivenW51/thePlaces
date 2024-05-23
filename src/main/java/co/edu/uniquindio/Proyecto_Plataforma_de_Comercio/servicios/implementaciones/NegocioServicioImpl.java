@@ -25,6 +25,7 @@ public class NegocioServicioImpl implements NegocioServicio {
 
     private final NegocioRepo negocioRepo;
     private final ImagenesServicioImpl imagenesServicio;
+    private final ComentarioServicioImpl comentarioServicio;
 
     /**
      * Obtiene los datos de un negocio dado su codigo
@@ -60,8 +61,8 @@ public class NegocioServicioImpl implements NegocioServicio {
         }
     }
 
-    public int Calificacion(String idNegocio){
-        return 5;
+    public int Calificacion(String idNegocio) throws Exception {
+        return comentarioServicio.calificacionNegocio(idNegocio);
     }
 
     /**

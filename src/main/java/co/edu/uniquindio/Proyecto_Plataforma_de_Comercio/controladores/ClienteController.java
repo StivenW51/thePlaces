@@ -2,6 +2,7 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.controladores;
 
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.*;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ClienteServicio;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ComentarioServicio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.utils.FiltroToken;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ClienteController {
 
     private final ClienteServicio clienteServicio;
+    private final ComentarioServicio comentarioServicio;
 
     @GetMapping("/obtener/{codigo}")
     public ResponseEntity<MensajeDTO<Object>> obtenerCliente(@PathVariable String codigo) throws Exception {
@@ -101,4 +103,34 @@ public class ClienteController {
                     new MensajeDTO<>(true, ex.getMessage()));
         }
     }
+
+
+
+    @PostMapping(value = "/agregar-comentario")
+    public ResponseEntity<MensajeDTO<Object>> agregarComentario(@Valid @RequestBody ComentarioDTO comentarioDTO) throws Exception {
+        try{
+            comentarioServicio.registrarComentario(comentarioDTO);
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(false, "Comentario Agregado"));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(true, ex.getMessage()));
+        }
+    }
+
+    @PutMapping(value = "/responder-comentario")
+    public ResponseEntity<MensajeDTO<Object>> responderComentario(@Valid @RequestBody RespuestaDTO respuestaDTO) throws Exception {
+        try{
+            comentarioServicio.responderComentario(respuestaDTO);
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(false, "Comentario respuesto"));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(true, ex.getMessage()));
+        }
+    }
+
+
 }

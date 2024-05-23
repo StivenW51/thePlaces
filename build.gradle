@@ -35,8 +35,24 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+
+}
+/*
+bootJar {
+    archiveFileName = 'the-places.jar' // Puedes cambiar el nombre del archivo JAR
+    mainClassName = 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication' // Asegúrate de que esta clase exista y tenga el método main
+}*/
+
+springBoot {
+    mainClass.set('co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication')
 }
 
+bootJar {
+    archiveFileName = 'the-places.jar'
+}
+
+/*
 test {
     useJUnitPlatform()
 }
+*/
