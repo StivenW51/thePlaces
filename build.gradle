@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
@@ -36,24 +37,21 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
+
 }
 
+/*
 bootJar {
     archiveFileName = 'the-places.jar' // Puedes cambiar el nombre del archivo JAR
     mainClass.set('co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication')
     //mainClassName = 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication' // Asegúrate de que esta clase exista y tenga el método main
 }
-/*
+*/
+
 springBoot {
-    mainClass.set('co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication')
+    mainClass = 'co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.ProyectoAplication'
 }
 
 bootJar {
     archiveFileName = 'the-places.jar'
 }
-
-
-test {
-    useJUnitPlatform()
-}
-*/
