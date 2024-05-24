@@ -26,8 +26,7 @@ public record RegistroUsuarioDTO(
         String ciudadResidencia,
         @NotBlank @Length(min = 8)
         String password,
-        @NotBlank
-        File fotoPerfil,
+        String fotoPerfil,
         @NotNull
         List<String> telefono,
         @NotNull

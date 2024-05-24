@@ -18,7 +18,7 @@ public class JWTUtils {
                 .claims(claims)
                 .subject(email)
                 .issuedAt(Date.from(now))
-                .expiration(Date.from(now.plus(2L, ChronoUnit.MINUTES)))
+                .expiration(Date.from(now.plus(1L, ChronoUnit.HOURS)))
                 .signWith( getKey() )
                 .compact();
 

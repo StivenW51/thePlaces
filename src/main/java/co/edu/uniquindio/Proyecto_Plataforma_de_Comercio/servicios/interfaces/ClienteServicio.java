@@ -10,14 +10,10 @@ public interface ClienteServicio {
 
     void actualizarPerfil(ActualizacionUsuarioDTO actualizacionUsuarioDTO)throws Exception;
     void eliminarPerfil(String idCliente)throws Exception;
-    void iniciarSesion(InicioSesionDTO inicioSesionDTO)throws Exception;
-    void enviarLinkRecuparcion(String email)throws Exception;
-    void recuperarPassword(RecuperacionPasswordDTO recuperacionPasswordDTO)throws Exception;
     DetalleClienteDTO obtenerCliente(String idCliente)throws Exception;
     List<ItemClienteDTO> listarClientes();
     List<DetalleNegocioDTO> listarFavoritos(String idCliente) throws Exception;
     void AgregarFavorito(FavoritoDTO favoritoDTO) throws Exception;
     void QuitarFavorito(FavoritoDTO favoritoDTO) throws Exception;
-
 
 }

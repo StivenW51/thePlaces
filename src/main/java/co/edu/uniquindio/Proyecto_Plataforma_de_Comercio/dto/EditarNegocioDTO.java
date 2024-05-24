@@ -15,7 +15,7 @@ public record EditarNegocioDTO(
 
         @NotBlank
         String id,
-        @NotNull
+
         List<String> imagenes,
         @NotBlank @Length (max = 100)
         String nombreNegocio,

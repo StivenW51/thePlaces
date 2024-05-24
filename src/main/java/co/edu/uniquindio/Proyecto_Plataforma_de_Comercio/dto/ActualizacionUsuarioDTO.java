@@ -23,7 +23,7 @@ public record ActualizacionUsuarioDTO(
         @Length(max = 100)
         String apellido,
 
-        @NotBlank
+
         String fotoPerfil,
 
         @NotBlank

@@ -35,12 +35,17 @@ public class ComentarioServicioImpl implements ComentarioServicio {
                 .urlFotoComentario("")
                 .build();
 
-        File uploadedFile = comentarioDTO.urlFotoComentario();
-        Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
-        String urlCloudinary = cloudinaryResponse.get("url").toString();
-        comentario.setUrlFotoComentario(urlCloudinary);
+        try{
+            File uploadedFile = new File(comentarioDTO.urlFotoComentario());
+            Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
+            String urlCloudinary = cloudinaryResponse.get("url").toString();
+            comentario.setUrlFotoComentario(urlCloudinary);
+        }
+        catch (Exception ex){
+            comentario.setUrlFotoComentario("");
+        }
 
-        Comentario registro = comentarioRepo.save(comentario);
+        comentarioRepo.save(comentario);
     }
 
     @Override

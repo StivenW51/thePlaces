@@ -65,7 +65,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         cliente.setTelefono(actualizacionUsuarioDTO.telefono());
 
         ActualizarCuentaDTO actualizarCuentaDTO = new ActualizarCuentaDTO(actualizacionUsuarioDTO.idCuenta(),
-                actualizacionUsuarioDTO.email(), actualizacionUsuarioDTO.fotoPerfil(),actualizacionUsuarioDTO.token());
+                actualizacionUsuarioDTO.email(), actualizacionUsuarioDTO.fotoPerfil());
 
         //actualizamos el email de la cuenta
         cuentaServicio.actualizarCuenta(actualizarCuentaDTO);
@@ -92,33 +92,6 @@ public class ClienteServicioImpl implements ClienteServicio {
         cuentaServicio.inactivarCuenta(cliente.getIdCuenta());
     }
 
-    @Override
-    public void iniciarSesion(InicioSesionDTO inicioSesionDTO) throws Exception {
-
-        Optional<Cuenta> optionalCuenta = cuentaRepo.findByEmail(inicioSesionDTO.email());
-        if (optionalCuenta.isEmpty()) {
-            throw new Exception("cliente no existe");
-        }
-        else {
-            if(inicioSesionDTO.password().equals(optionalCuenta.get().getPassword())){
-
-            }
-            else{
-                throw new Exception("Contraseña incorrecta");
-            }
-        }
-
-    }
-
-    @Override
-    public void enviarLinkRecuparcion(String email) throws Exception {
-
-    }
-
-    @Override
-    public void recuperarPassword(RecuperacionPasswordDTO recuperacionPasswordDTO) throws Exception {
-
-    }
 
     @Override
     public DetalleClienteDTO obtenerCliente(String idCliente) throws Exception {

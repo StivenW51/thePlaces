@@ -33,6 +33,7 @@ public class ImagenesServicioImpl implements ImagenesServicio {
     public Map eliminarImagen(String idImagen) throws Exception {
         return cloudinary.uploader().destroy(idImagen, ObjectUtils.emptyMap());
     }
+
     private File convertir(MultipartFile imagen) throws IOException {
         File file = File.createTempFile(imagen.getOriginalFilename(), null);
         FileOutputStream fos = new FileOutputStream(file);
@@ -40,7 +41,6 @@ public class ImagenesServicioImpl implements ImagenesServicio {
         fos.close();
         return file;
     }
-
 
     @Override
     public Map subirImagenII(File file) throws Exception {

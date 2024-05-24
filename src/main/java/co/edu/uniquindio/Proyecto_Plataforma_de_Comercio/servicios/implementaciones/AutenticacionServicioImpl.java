@@ -2,6 +2,7 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.implementaci
 
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.EmailDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.InicioSesionDTO;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.RecuperarDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.TokenDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Cliente;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos.Moderador;
@@ -72,11 +73,11 @@ public class AutenticacionServicioImpl implements AutenticacionServicio {
     }
 
     @Override
-    public void recuparContrasenna(String email) throws Exception {
+    public void recuparContrasenna(RecuperarDTO recuperarDTO) throws Exception {
         String link;
-        Optional<Cuenta> cuentaOptional = cuentaRepo.findByEmail(email);
+        Optional<Cuenta> cuentaOptional = cuentaRepo.findByEmail(recuperarDTO.email());
 
-        link = "http://www.intermedia-col.com/";
+        link = recuperarDTO.url();
 
         if(cuentaOptional.isEmpty()){
             throw new Exception("Cuenta no existe");
@@ -90,6 +91,7 @@ public class AutenticacionServicioImpl implements AutenticacionServicio {
         link += jwtUtils.generarToken(cuenta.getEmail(), map);
 
         emailServicio.enviarCorreo(new EmailDTO("Recuperar Contarseña",
-                "aqui está tu link de recuperación de la contraseña <br> " + link, email));
+                "aqui está tu link de recuperación de la contraseña <br> "
+                        + link, recuperarDTO.email()));
     }
 }

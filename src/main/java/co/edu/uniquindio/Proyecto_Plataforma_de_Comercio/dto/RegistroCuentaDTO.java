@@ -19,8 +19,7 @@ public record RegistroCuentaDTO (
         @NotBlank
         @Length(min = 8)
         String password,
-        @NotBlank
-        File fotoPerfil,
+        String fotoPerfil,
         @NotBlank
         boolean estadoRegistro
 ){

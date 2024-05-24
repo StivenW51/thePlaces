@@ -25,7 +25,7 @@ public record CrearNegocioDTO(
         @NotBlank @Length (max = 100)
         String direccion,
 
-        @NotNull
+
         List<File> imagenes,
 
         @NotNull

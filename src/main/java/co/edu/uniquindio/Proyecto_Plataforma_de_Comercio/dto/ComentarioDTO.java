@@ -17,6 +17,6 @@ public record ComentarioDTO(
         @NotNull @Max(5) @Min(1)
         int calificacion,
         //private CodigoDescuento bono,
-        File urlFotoComentario
+        String urlFotoComentario
 ) {
 }

@@ -100,8 +100,6 @@ public class NegocioController {
     }
 
 
-
-
     @GetMapping(value = "/listar-negocios-nombre-tipo")
     public ResponseEntity<MensajeDTO<Object>> listarNegocioNombreOTipo(@Valid @RequestBody NegocioNombreTipoDistanciaDTO negocioNombreTipoDistanciaDTO) throws Exception{
         try{

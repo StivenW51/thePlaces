@@ -1,11 +1,10 @@
 package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.implementaciones;
 
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.ActualizarCuentaDTO;
-import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.CambioPasswordDTO;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.RecuperacionPasswordDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.RegistroCuentaDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Cuenta;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoCliente;
-import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegistro;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.repositorios.CuentaRepo;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.CuentaServicio;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,6 @@ public class CuentaServicioImpl implements CuentaServicio {
 
     @Override
     public void crearCuenta(RegistroCuentaDTO registroCuentaDTO) throws Exception {
-
         Cuenta cuenta = new Cuenta();
 
         //verificamos que el email sea único
@@ -42,19 +40,22 @@ public class CuentaServicioImpl implements CuentaServicio {
 
         cuenta.setNickname(registroCuentaDTO.nickname());
         cuenta.setEmail(registroCuentaDTO.email());
-        //
         cuenta.setEstadoCliente(EstadoCliente.ACTIVO);
 
-        File uploadedFile = registroCuentaDTO.fotoPerfil();
-        Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
-        String urlCloudinary = cloudinaryResponse.get("url").toString();
-        cuenta.setFotoPerfil(urlCloudinary);
+        try{
+            File uploadedFile = new File(registroCuentaDTO.fotoPerfil());
+            Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
+            String urlCloudinary = cloudinaryResponse.get("url").toString();
+            cuenta.setFotoPerfil(urlCloudinary);
+        }
+        catch (Exception ex){
+            cuenta.setFotoPerfil("");
+        }
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String passwordEncriptada = passwordEncoder.encode(registroCuentaDTO.password());
         cuenta.setPassword( passwordEncriptada );
         cuentaRepo.save(cuenta);
-
     }
 
     public void actualizarCuenta(ActualizarCuentaDTO actualizarCuentaDTO) throws Exception{
@@ -75,8 +76,10 @@ public class CuentaServicioImpl implements CuentaServicio {
     }
 
     @Override
-    public void cambiarPassword(CambioPasswordDTO cambioPasswordDTO) throws Exception {
-
+    public void cambiarPassword(RecuperacionPasswordDTO recuperacionPasswordDTO) throws Exception {
+        Cuenta cuenta = obtenerCuentaPorEmail(recuperacionPasswordDTO.email());
+        cuenta.setPassword(recuperacionPasswordDTO.password());
+        cuentaRepo.save(cuenta);
     }
 
     @Override

@@ -2,6 +2,7 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.controladores;
 
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.InicioSesionDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.MensajeDTO;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.RecuperarDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.TokenDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.AutenticacionServicio;
 import jakarta.validation.Valid;
@@ -30,9 +31,9 @@ public class AutenticacionController {
     }
 
     @PostMapping("/recuperar-contrasenna/{email}")
-    public ResponseEntity<MensajeDTO<Object>> recuperarContrasenna(@PathVariable String email) throws Exception {
+    public ResponseEntity<MensajeDTO<Object>> recuperarContrasenna(@Valid @RequestBody RecuperarDTO recuperarDTO) throws Exception {
         try{
-            autenticacionServicio.recuparContrasenna(email);
+            autenticacionServicio.recuparContrasenna(recuperarDTO);
             return ResponseEntity.ok().body(
                     new MensajeDTO<>(false, "Link enviado"));
         }

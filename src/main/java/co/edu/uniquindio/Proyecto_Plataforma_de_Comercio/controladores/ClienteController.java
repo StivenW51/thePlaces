@@ -3,6 +3,7 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.controladores;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.*;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ClienteServicio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ComentarioServicio;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.CuentaServicio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.utils.FiltroToken;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class ClienteController {
 
     private final ClienteServicio clienteServicio;
     private final ComentarioServicio comentarioServicio;
+    private final CuentaServicio cuentaServicio;
 
     @GetMapping("/obtener/{codigo}")
     public ResponseEntity<MensajeDTO<Object>> obtenerCliente(@PathVariable String codigo) throws Exception {
@@ -105,7 +107,21 @@ public class ClienteController {
     }
 
 
+    @PostMapping(value = "/cambiar-password")
+    public ResponseEntity<MensajeDTO<Object>> cambiarPassword(@Valid @RequestBody RecuperacionPasswordDTO recuperacionPasswordDTO) throws Exception {
+        try{
+            cuentaServicio.cambiarPassword(recuperacionPasswordDTO);
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(false, "Favorito quitado"));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(true, ex.getMessage()));
+        }
+    }
 
+
+    //SECCION DE  COMENTARIOS
     @PostMapping(value = "/agregar-comentario")
     public ResponseEntity<MensajeDTO<Object>> agregarComentario(@Valid @RequestBody ComentarioDTO comentarioDTO) throws Exception {
         try{
@@ -132,5 +148,6 @@ public class ClienteController {
         }
     }
 
+    //FIN SECCION DE  COMENTARIOS
 
 }

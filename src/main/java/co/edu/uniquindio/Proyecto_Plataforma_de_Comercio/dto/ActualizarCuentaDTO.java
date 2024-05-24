@@ -12,10 +12,7 @@ public record ActualizarCuentaDTO(
         @Length(min = 8) @Email
         String email,
 
-        @NotBlank
-        String fotoPerfil,
+        String fotoPerfil
 
-        @NotBlank
-        String token
 ){
 }
