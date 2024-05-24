@@ -88,22 +88,8 @@ public class NegocioServicioImpl implements NegocioServicio {
         negocio.setEstadoNegocio(crearNegocioDTO.estadoNegocio());
         negocio.setTelefonos(crearNegocioDTO.telefonos());
         negocio.setCodigoCliente(crearNegocioDTO.codigoCliente());
+        negocio.setImagenes(crearNegocioDTO.imagenes());
 
-        for(String url_Imagen : crearNegocioDTO.imagenes()){
-
-            try{
-                File uploadedFile =  new File(url_Imagen);
-                Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
-                urlCloudinary = cloudinaryResponse.get("url").toString();
-                ImagenesUrl.add(urlCloudinary);
-            }
-            catch (Exception ex){
-                ImagenesUrl.add("");
-            }
-
-        }
-
-        negocio.setImagenes(ImagenesUrl);
         Negocio negocioGuardado = negocioRepo.save(negocio);
 
         return negocioGuardado.getCodigo();

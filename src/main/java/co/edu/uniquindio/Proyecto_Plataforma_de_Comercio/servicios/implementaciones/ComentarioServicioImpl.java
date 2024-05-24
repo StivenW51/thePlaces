@@ -32,18 +32,8 @@ public class ComentarioServicioImpl implements ComentarioServicio {
                 .mensaje(comentarioDTO.mensaje())
                 .calificacion(comentarioDTO.calificacion())
                 .fecha(LocalDateTime.now())
-                .urlFotoComentario("")
+                .urlFotoComentario(comentarioDTO.urlFotoComentario())
                 .build();
-
-        try{
-            File uploadedFile = new File(comentarioDTO.urlFotoComentario());
-            Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
-            String urlCloudinary = cloudinaryResponse.get("url").toString();
-            comentario.setUrlFotoComentario(urlCloudinary);
-        }
-        catch (Exception ex){
-            comentario.setUrlFotoComentario("");
-        }
 
         comentarioRepo.save(comentario);
     }

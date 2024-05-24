@@ -42,8 +42,4 @@ public class ImagenesServicioImpl implements ImagenesServicio {
         return file;
     }
 
-    @Override
-    public Map subirImagenII(File file) throws Exception {
-        return cloudinary.uploader().upload(file, ObjectUtils.asMap("folder", "the_places"));
-    }
 }

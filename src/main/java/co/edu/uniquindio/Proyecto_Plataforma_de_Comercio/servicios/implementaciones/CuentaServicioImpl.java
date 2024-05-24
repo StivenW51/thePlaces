@@ -41,16 +41,16 @@ public class CuentaServicioImpl implements CuentaServicio {
         cuenta.setNickname(registroCuentaDTO.nickname());
         cuenta.setEmail(registroCuentaDTO.email());
         cuenta.setEstadoCliente(EstadoCliente.ACTIVO);
-
-        try{
-            File uploadedFile = new File(registroCuentaDTO.fotoPerfil());
-            Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
-            String urlCloudinary = cloudinaryResponse.get("url").toString();
-            cuenta.setFotoPerfil(urlCloudinary);
-        }
-        catch (Exception ex){
-            cuenta.setFotoPerfil("");
-        }
+        cuenta.setFotoPerfil(registroCuentaDTO.fotoPerfil());
+//        try{
+//            //File uploadedFile = new File(registroCuentaDTO.fotoPerfil());
+//            //Map cloudinaryResponse = imagenesServicio.subirImagen(registroCuentaDTO.fotoPerfil());
+//            //String urlCloudinary = cloudinaryResponse.get("url").toString();
+//            cuenta.setFotoPerfil(urlCloudinary);
+//        }
+//        catch (Exception ex){
+//            cuenta.setFotoPerfil("");
+//        }
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String passwordEncriptada = passwordEncoder.encode(registroCuentaDTO.password());
