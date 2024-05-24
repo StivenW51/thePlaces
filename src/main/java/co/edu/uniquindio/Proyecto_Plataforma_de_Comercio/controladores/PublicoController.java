@@ -4,6 +4,7 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.controladores;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.MensajeDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto.RegistroUsuarioDTO;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.ComentarioServicio;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.NegocioServicio;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.PublicoServicio;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class PublicoController {
 
     private final PublicoServicio publicoServicio;
     private final ComentarioServicio comentarioServicio;
+    private final NegocioServicio negocioServicio;
 
     @PostMapping(value = "/registrar")
     public ResponseEntity<MensajeDTO<String>> registrarCliente(@Valid @RequestBody RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
@@ -63,6 +65,19 @@ public class PublicoController {
         try{
             return ResponseEntity.ok().body(
                     new MensajeDTO<>(false, comentarioServicio.calificacionNegocio(idNegocio)));
+        }
+        catch (Exception ex) {
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(true, ex.getMessage()));
+        }
+    }
+
+
+    @GetMapping(value = "/obtener/{codigo}")
+    public ResponseEntity<MensajeDTO<Object>> obtenerNegocioCodigo(@PathVariable String codigo) throws Exception{
+        try{
+            return ResponseEntity.ok().body(
+                    new MensajeDTO<>(false, negocioServicio.obtenerNegocioCodigo(codigo)));
         }
         catch (Exception ex) {
             return ResponseEntity.ok().body(

@@ -15,7 +15,7 @@ public class NegocioController {
     private final NegocioServicio negocioServicio;
 
     @PostMapping(value = "/crear")
-    public ResponseEntity<MensajeDTO<String>> crearNegocio(@Valid @RequestBody CrearNegocioDTO crearNegocioDTO) throws Exception{
+    public ResponseEntity<MensajeDTO<Object>> crearNegocio(@Valid @RequestBody CrearNegocioDTO crearNegocioDTO) throws Exception{
         try{
             negocioServicio.crearNegocio(crearNegocioDTO);
             return ResponseEntity.ok().body(new MensajeDTO<>(false, "Negocio registrado correctamente"));
@@ -51,17 +51,7 @@ public class NegocioController {
         }
     }
 
-    @GetMapping(value = "/obtener/{codigo}")
-    public ResponseEntity<MensajeDTO<Object>> obtenerNegocioCodigo(@PathVariable String codigo) throws Exception{
-        try{
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(false, negocioServicio.obtenerNegocioCodigo(codigo)));
-        }
-        catch (Exception ex) {
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(true, ex.getMessage()));
-        }
-    }
+
 
     @GetMapping(value = "/listarNegociosCliente/{idCliente}")
     public ResponseEntity<MensajeDTO<Object>> listarNegociosCliente(@PathVariable String idCliente) throws Exception{

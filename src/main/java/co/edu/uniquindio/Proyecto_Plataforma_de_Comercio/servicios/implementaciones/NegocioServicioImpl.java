@@ -52,8 +52,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getTelefonos(),
                     negocio.getDescripcion(),
                     negocio.getCodigoCliente(),
-                    Calificacion(negocio.getCodigo())
-
+                    Calificacion(negocio.getCodigo()),
+                    negocio.getEstadoNegocio()
             );
         }
         else {
@@ -89,13 +89,18 @@ public class NegocioServicioImpl implements NegocioServicio {
         negocio.setTelefonos(crearNegocioDTO.telefonos());
         negocio.setCodigoCliente(crearNegocioDTO.codigoCliente());
 
-        for(File url_Imagen : crearNegocioDTO.imagenes()){
+        for(String url_Imagen : crearNegocioDTO.imagenes()){
 
-            File uploadedFile = url_Imagen;
-            Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
+            try{
+                File uploadedFile =  new File(url_Imagen);
+                Map cloudinaryResponse = imagenesServicio.subirImagenII(uploadedFile);
+                urlCloudinary = cloudinaryResponse.get("url").toString();
+                ImagenesUrl.add(urlCloudinary);
+            }
+            catch (Exception ex){
+                ImagenesUrl.add("");
+            }
 
-            urlCloudinary = cloudinaryResponse.get("url").toString();
-            ImagenesUrl.add(urlCloudinary);
         }
 
         negocio.setImagenes(ImagenesUrl);
@@ -195,7 +200,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getTelefonos(),
                     negocio.getDescripcion(),
                     negocio.getCodigoCliente(),
-                    Calificacion(negocio.getCodigo())
+                    Calificacion(negocio.getCodigo()),
+                    negocio.getEstadoNegocio()
             ));
         }
 
@@ -241,7 +247,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                         negocio.getTelefonos(),
                         negocio.getDescripcion(),
                         negocio.getCodigoCliente(),
-                        Calificacion(negocio.getCodigo())
+                        Calificacion(negocio.getCodigo()),
+                        negocio.getEstadoNegocio()
                 ));
             }
         }
@@ -286,7 +293,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getTelefonos(),
                     negocio.getDescripcion(),
                     negocio.getCodigoCliente(),
-                    Calificacion(negocio.getCodigo())
+                    Calificacion(negocio.getCodigo()),
+                    negocio.getEstadoNegocio()
             ));
         }
 

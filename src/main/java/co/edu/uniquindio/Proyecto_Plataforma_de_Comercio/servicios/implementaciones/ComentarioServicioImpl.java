@@ -99,25 +99,25 @@ public class ComentarioServicioImpl implements ComentarioServicio {
 
     @Override
     public int calificacionNegocio(String idNegocio) throws Exception{
-        List<Comentario> listaComentarios;
+        List<Comentario> listaComentarios = new ArrayList<>();
         Optional<List<Comentario>> optionalComentarios = comentarioRepo.findByCodigoNegocio(idNegocio);
         int calificacionNegocio = 0;
         double calificacionAcum = 0;
 
-        if(optionalComentarios.isEmpty()){
-            throw new Exception("el negocio no tiene calificaciones");
+        if(!optionalComentarios.isEmpty()){
+            listaComentarios = optionalComentarios.get();
         }
 
-        listaComentarios = optionalComentarios.get();
-        if(listaComentarios.isEmpty()){
-            throw new Exception("el negocio no tiene calificaciones");
-        }
+        if(!listaComentarios.isEmpty()){
+            for(int i = 0; i < listaComentarios.size(); i++){
+                calificacionAcum += listaComentarios.get(i).getCalificacion();
+            }
 
-        for(int i = 0; i < listaComentarios.size(); i++){
-            calificacionAcum += listaComentarios.get(i).getCalificacion();
+            calificacionNegocio = (int)Math.ceil(calificacionAcum/listaComentarios.size());
         }
-
-        calificacionNegocio = (int)Math.ceil(calificacionAcum/listaComentarios.size());
+        else{
+            calificacionNegocio = 0;
+        }
 
         return calificacionNegocio;
     }

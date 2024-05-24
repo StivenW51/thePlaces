@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ubicacion {
-    private double longitud;
-    private double latitud;
+    private float longitud;
+    private float latitud;
 }

@@ -26,7 +26,7 @@ public record CrearNegocioDTO(
         String direccion,
 
 
-        List<File> imagenes,
+        List<String> imagenes,
 
         @NotNull
         Ubicacion ubicacion,
