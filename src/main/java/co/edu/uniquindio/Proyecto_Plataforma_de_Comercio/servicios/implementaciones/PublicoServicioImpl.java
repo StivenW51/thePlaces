@@ -97,7 +97,8 @@ public class PublicoServicioImpl implements PublicoServicio {
                     negocio.getDescripcion(),
                     negocio.getCodigoCliente(),
                     negocioServicio.Calificacion(negocio.getCodigo()),
-                    negocio.getEstadoNegocio()
+                    negocio.getEstadoNegocio(),
+                    negocio.getEstadoRegistro()
             ));
         }
 

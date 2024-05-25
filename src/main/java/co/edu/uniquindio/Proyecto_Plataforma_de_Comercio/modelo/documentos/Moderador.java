@@ -1,9 +1,7 @@
 package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.documentos;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Setter
@@ -13,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Moderador {
 
+    @Id
+    @EqualsAndHashCode.Include
     private String codigo;
     private String nombre;
     private String idCuenta;

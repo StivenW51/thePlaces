@@ -3,6 +3,7 @@ package co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.dto;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Horario;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.entidades.Ubicacion;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoNegocio;
+import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.EstadoRegistro;
 import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.modelo.enums.TipoNegocio;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -44,6 +45,9 @@ public record DetalleNegocioDTO(
 
         Integer calificacion,
 
-        EstadoNegocio estadoNegocio
+        EstadoNegocio estadoNegocio,
+
+        EstadoRegistro estadoRegistro
+
 ) {
 }

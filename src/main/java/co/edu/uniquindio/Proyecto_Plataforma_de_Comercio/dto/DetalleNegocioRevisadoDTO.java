@@ -11,6 +11,8 @@ import java.util.List;
 
 public record DetalleNegocioRevisadoDTO(
 
+        @NotBlank
+        String id,
         @NotBlank @Length(max = 100)
         String nombreNegocio,
 

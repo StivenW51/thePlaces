@@ -30,12 +30,11 @@ public class ModeradorController {
         }
     }
 
-    @GetMapping(value = "/negocios-revisados")
-    public ResponseEntity<MensajeDTO<Object>> listarNegociosRevisadosModerador(@Valid @RequestBody EstadoRegistroModeradorDTO estadoRegistroModeradorDTO) throws Exception {
+    @GetMapping(value = "/negocios-revisados/{idModerador}/{estadoRegistro}")
+    public ResponseEntity<MensajeDTO<Object>> listarNegociosRevisadosModerador(@PathVariable String idModerador, @PathVariable String estadoRegistro) throws Exception {
         try{
-
             return ResponseEntity.ok().body(
-                    new MensajeDTO<>(false, moderadorServicio.listarNegociosRevisadosModerador(estadoRegistroModeradorDTO)));
+                    new MensajeDTO<>(false, moderadorServicio.listarNegociosRevisadosModerador(idModerador, estadoRegistro)));
         }
         catch (Exception ex) {
             return ResponseEntity.ok().body(

@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface RegistroModeradorRepo extends MongoRepository<RegistroModerador, String> {
-    Optional<List<RegistroModerador>> findByIdModeradorAndEstadoRegistro (String idModerador, EstadoRegistro estadoRegistro);
+    Optional<List<RegistroModerador>> findByIdModeradorAndEstadoRegistro (String idModerador, String estadoRegistro);
 }

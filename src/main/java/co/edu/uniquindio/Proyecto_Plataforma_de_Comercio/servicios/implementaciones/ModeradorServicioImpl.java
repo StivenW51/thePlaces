@@ -13,6 +13,7 @@ import co.edu.uniquindio.Proyecto_Plataforma_de_Comercio.servicios.interfaces.Mo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -59,9 +60,9 @@ public class ModeradorServicioImpl implements ModeradorServicio {
     }
 
     @Override
-    public List<DetalleNegocioRevisadoDTO> listarNegociosRevisadosModerador(EstadoRegistroModeradorDTO estadoRegistroModeradorDTO) throws Exception {
+    public List<DetalleNegocioRevisadoDTO> listarNegociosRevisadosModerador(String idModerador, String estadoRegistro) throws Exception {
         List<RegistroModerador> registrosModeradores = new ArrayList<>();
-        Optional<List<RegistroModerador>> optionalRegistrosModeradores = registroModeradorRepo.findByIdModeradorAndEstadoRegistro(estadoRegistroModeradorDTO.idModerador(), estadoRegistroModeradorDTO.estadoRegistro());
+        Optional<List<RegistroModerador>> optionalRegistrosModeradores = registroModeradorRepo.findByIdModeradorAndEstadoRegistro(idModerador, estadoRegistro);
         List<DetalleNegocioRevisadoDTO> listaDetalleRegistros = new ArrayList<>();
         DetalleNegocioDTO detalleNegocioDTO;
 
@@ -79,6 +80,7 @@ public class ModeradorServicioImpl implements ModeradorServicio {
             detalleNegocioDTO = negocioServicio.obtenerNegocioCodigo(registroModerador.getIdNegocio());
 
             listaDetalleRegistros.add(new DetalleNegocioRevisadoDTO(
+                                        detalleNegocioDTO.id(),
                                         detalleNegocioDTO.nombreNegocio(),
                                         detalleNegocioDTO.descripcion(),
                                         detalleNegocioDTO.horarios(),
