@@ -54,7 +54,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getCodigoCliente(),
                     Calificacion(negocio.getCodigo()),
                     negocio.getEstadoNegocio(),
-                    negocio.getEstadoRegistro()
+                    negocio.getEstadoRegistro(),
+                    negocio.getIdModerador()
             );
         }
         else {
@@ -96,11 +97,7 @@ public class NegocioServicioImpl implements NegocioServicio {
         return negocioGuardado.getCodigo();
     }
 
-    /**
-     * Actualiza los datos de un negocio
-     * @param editarNegocioDTO
-     * @throws Exception
-     */
+
     @Override
     public void actualizarNegocio(EditarNegocioDTO editarNegocioDTO) throws Exception {
 
@@ -109,25 +106,23 @@ public class NegocioServicioImpl implements NegocioServicio {
 
         //excepcion sino se encuentra el negocio
         if (optionalNegocio.isEmpty()) {
-
             throw new Exception("Negocio no encontrado");
         }
 
         //Actualizamos los datos del negocio
         Negocio negocio = optionalNegocio.get();
-        negocio.setNombre(editarNegocioDTO.nombreNegocio());
+
+        negocio.setNombre(editarNegocioDTO.nombre());
         negocio.setTipoNegocio(editarNegocioDTO.tipoNegocio());
         negocio.setDescripcion(editarNegocioDTO.descripcion());
+        negocio.setDireccion(editarNegocioDTO.direccion());
         negocio.setUbicacion(editarNegocioDTO.ubicacion());
         negocio.setTelefonos(editarNegocioDTO.telefonos());
         negocio.setHorarios(editarNegocioDTO.horarios());
         negocio.setImagenes(editarNegocioDTO.imagenes());
-        negocio.setEstadoNegocio(editarNegocioDTO.estadoNegocio());
-        negocio.setEstadoRegistro(editarNegocioDTO.estadoRegistro());
 
         //Guardamos los cambios
         Negocio negocioActualizado = negocioRepo.save(negocio);
-
     }
 
     /**
@@ -189,18 +184,15 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getCodigoCliente(),
                     Calificacion(negocio.getCodigo()),
                     negocio.getEstadoNegocio(),
-                    negocio.getEstadoRegistro()
+                    negocio.getEstadoRegistro(),
+                    negocio.getIdModerador()
             ));
         }
 
         return listaDetalleNegocio;
     }
 
-    /**
-     * Lista los negocios que cumplen con todos los requisitos de la plataforma
-     * @return
-     * @throws Exception
-     */
+
 
 
     /**
@@ -237,7 +229,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                         negocio.getCodigoCliente(),
                         Calificacion(negocio.getCodigo()),
                         negocio.getEstadoNegocio(),
-                        negocio.getEstadoRegistro()
+                        negocio.getEstadoRegistro(),
+                        negocio.getIdModerador()
                 ));
             }
         }
@@ -284,7 +277,8 @@ public class NegocioServicioImpl implements NegocioServicio {
                     negocio.getCodigoCliente(),
                     Calificacion(negocio.getCodigo()),
                     negocio.getEstadoNegocio(),
-                    negocio.getEstadoRegistro()
+                    negocio.getEstadoRegistro(),
+                    negocio.getIdModerador()
             ));
         }
 

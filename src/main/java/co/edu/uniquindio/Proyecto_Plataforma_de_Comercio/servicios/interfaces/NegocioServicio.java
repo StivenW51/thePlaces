@@ -9,11 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NegocioServicio {
-
     DetalleNegocioDTO obtenerNegocioCodigo(String codigo) throws Exception;
     String crearNegocio(CrearNegocioDTO crearNegocioDTO) throws Exception;
     List<DetalleNegocioDTO> listarNegociosCliente(String idCliente) throws Exception;
-    void actualizarNegocio(EditarNegocioDTO editarNegocioDTO) throws Exception;
+    public void actualizarNegocio(EditarNegocioDTO editarNegocioDTO) throws Exception;
     void eliminarNegocio(String idNegocio) throws Exception;
     void CambiarEstadoRegistro(CambioEstadoRegistroDTO cambioEstadoRegistroDTO) throws Exception;
 

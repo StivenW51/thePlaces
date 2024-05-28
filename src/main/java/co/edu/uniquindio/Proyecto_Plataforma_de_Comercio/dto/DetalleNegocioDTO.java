@@ -47,7 +47,8 @@ public record DetalleNegocioDTO(
 
         EstadoNegocio estadoNegocio,
 
-        EstadoRegistro estadoRegistro
+        EstadoRegistro estadoRegistro,
 
+        String idModerador
 ) {
 }

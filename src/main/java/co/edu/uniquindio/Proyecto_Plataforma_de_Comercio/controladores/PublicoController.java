@@ -45,8 +45,6 @@ public class PublicoController {
         }
     }
 
-
-
     @GetMapping(value = "/listar-comentarios-negocio/{idNegocio}")
     public ResponseEntity<MensajeDTO<Object>> listarComentariosNegocio(@PathVariable String idNegocio) throws Exception{
         try{

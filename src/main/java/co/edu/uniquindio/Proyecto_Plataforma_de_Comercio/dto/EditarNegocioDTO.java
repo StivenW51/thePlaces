@@ -12,30 +12,22 @@ import org.hibernate.validator.constraints.Length;
 import java.util.List;
 
 public record EditarNegocioDTO(
-
         @NotBlank
         String id,
-
-        List<String> imagenes,
         @NotBlank @Length (max = 100)
-        String nombreNegocio,
-        @NotBlank @Length (max = 100)
-        String direccion,
-        @NotNull
-        List<String> telefonos,
+        String nombre,
         @NotNull
         TipoNegocio tipoNegocio,
-        @NotNull
-        EstadoNegocio estadoNegocio,
-        @NotNull
-        EstadoRegistro estadoRegistro,
-        @NotNull
         @NotBlank @Length (max = 200)
         String descripcion,
+        @NotBlank @Length (max = 100)
+        String direccion,
+        List<String> imagenes,
+        @NotNull
+        Ubicacion ubicacion,
         @NotNull
         List<Horario> horarios,
         @NotNull
-        Ubicacion ubicacion
-
+        List<String> telefonos
 ) {
 }

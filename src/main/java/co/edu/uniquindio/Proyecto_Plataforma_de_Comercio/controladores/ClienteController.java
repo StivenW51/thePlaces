@@ -21,7 +21,7 @@ public class ClienteController {
 
     private final ClienteServicio clienteServicio;
     private final ComentarioServicio comentarioServicio;
-    private final CuentaServicio cuentaServicio;
+
 
     @GetMapping("/obtener/{codigo}")
     public ResponseEntity<MensajeDTO<Object>> obtenerCliente(@PathVariable String codigo) throws Exception {
@@ -97,20 +97,6 @@ public class ClienteController {
     public ResponseEntity<MensajeDTO<Object>> quitarFavorito(@Valid @RequestBody FavoritoDTO favoritoDTO) throws Exception {
         try{
             clienteServicio.QuitarFavorito(favoritoDTO);
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(false, "Favorito quitado"));
-        }
-        catch (Exception ex) {
-            return ResponseEntity.ok().body(
-                    new MensajeDTO<>(true, ex.getMessage()));
-        }
-    }
-
-
-    @PostMapping(value = "/cambiar-password")
-    public ResponseEntity<MensajeDTO<Object>> cambiarPassword(@Valid @RequestBody RecuperacionPasswordDTO recuperacionPasswordDTO) throws Exception {
-        try{
-            cuentaServicio.cambiarPassword(recuperacionPasswordDTO);
             return ResponseEntity.ok().body(
                     new MensajeDTO<>(false, "Favorito quitado"));
         }

@@ -42,15 +42,6 @@ public class CuentaServicioImpl implements CuentaServicio {
         cuenta.setEmail(registroCuentaDTO.email());
         cuenta.setEstadoCliente(EstadoCliente.ACTIVO);
         cuenta.setFotoPerfil(registroCuentaDTO.fotoPerfil());
-//        try{
-//            //File uploadedFile = new File(registroCuentaDTO.fotoPerfil());
-//            //Map cloudinaryResponse = imagenesServicio.subirImagen(registroCuentaDTO.fotoPerfil());
-//            //String urlCloudinary = cloudinaryResponse.get("url").toString();
-//            cuenta.setFotoPerfil(urlCloudinary);
-//        }
-//        catch (Exception ex){
-//            cuenta.setFotoPerfil("");
-//        }
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String passwordEncriptada = passwordEncoder.encode(registroCuentaDTO.password());
@@ -78,7 +69,11 @@ public class CuentaServicioImpl implements CuentaServicio {
     @Override
     public void cambiarPassword(RecuperacionPasswordDTO recuperacionPasswordDTO) throws Exception {
         Cuenta cuenta = obtenerCuentaPorEmail(recuperacionPasswordDTO.email());
-        cuenta.setPassword(recuperacionPasswordDTO.password());
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String passwordEncriptada = passwordEncoder.encode(recuperacionPasswordDTO.password());
+
+        cuenta.setPassword( passwordEncriptada );
         cuentaRepo.save(cuenta);
     }
 
