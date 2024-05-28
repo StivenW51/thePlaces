@@ -138,13 +138,21 @@ public class ClienteServicioImpl implements ClienteServicio {
     public List<DetalleNegocioDTO> listarFavoritos(String idCliente) throws Exception {
         Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(idCliente);
         List<DetalleNegocioDTO> listDetalleNegocioDTO = new ArrayList<>();
-        Negocio negocio;
+
+        if(optionalCliente.isEmpty()){
+            throw new Exception("Cliente no existe");
+        }
 
         Cliente cliente = optionalCliente.get();
-        List<String> favoritos = cliente.getFavoritos();
 
-        for(String idNegocio : favoritos){
-            listDetalleNegocioDTO.add(negocioServicio.obtenerNegocioCodigo(idNegocio));
+        if(cliente.getFavoritos() != null){
+            List<String> favoritos = cliente.getFavoritos();
+
+            if(!favoritos.isEmpty()){
+                for(String idNegocio : favoritos){
+                    listDetalleNegocioDTO.add(negocioServicio.obtenerNegocioCodigo(idNegocio));
+                }
+            }
         }
 
         return listDetalleNegocioDTO;
@@ -153,13 +161,22 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public void AgregarFavorito(FavoritoDTO favoritoDTO) throws Exception {
         Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(favoritoDTO.idCliente());
+        //Cliente cliente = optionalCliente.get();
+        List<String> favoritos = new ArrayList<>();
+
+        if(optionalCliente.isEmpty()){
+            throw new Exception("Cliente no existe");
+        }
+
         Cliente cliente = optionalCliente.get();
 
-        List<String> favoritos = cliente.getFavoritos();
+        if(cliente.getFavoritos() != null){
+            favoritos = cliente.getFavoritos();
 
-        for(String idNegocio : favoritos){
-            if(idNegocio.equals(favoritoDTO.idNegocio())){
-                throw new Exception("Favorito ya existe");
+            for(String idNegocio : favoritos){
+                if(idNegocio.equals(favoritoDTO.idNegocio())){
+                    throw new Exception("Favorito ya existe");
+                }
             }
         }
 
@@ -172,15 +189,21 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public void QuitarFavorito(FavoritoDTO favoritoDTO) throws Exception {
         Optional<Cliente> optionalCliente = clienteRepo.findByCodigo(favoritoDTO.idCliente());
+        List<String> favoritos = new ArrayList<>();
+
+        if(optionalCliente.isEmpty()){
+            throw new Exception("Cliente no existe");
+        }
+
         Cliente cliente = optionalCliente.get();
+        if(!favoritos.isEmpty()){
+            favoritos = cliente.getFavoritos();
 
-        List<String> favoritos = cliente.getFavoritos();
-        //List<String> favoritosBK = favoritos;
-
-        for(String idNegocio : favoritos){
-            if(idNegocio.equals(favoritoDTO.idNegocio())){
-                favoritos.remove(favoritoDTO.idNegocio());
-                break;
+            for(String idNegocio : favoritos){
+                if(idNegocio.equals(favoritoDTO.idNegocio())){
+                    favoritos.remove(favoritoDTO.idNegocio());
+                    break;
+                }
             }
         }
 
